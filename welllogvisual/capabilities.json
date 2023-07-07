@@ -23,6 +23,15 @@
             }
           }
         },
+        "circleBorderColor": {
+          "type": {
+            "fill": {
+              "solid": {
+                "color": true
+              }
+            }
+          }
+        },
         "circleThickness": {
           "type": {
             "numeric": true

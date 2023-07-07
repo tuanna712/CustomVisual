@@ -43,6 +43,12 @@ export class CircleSettings extends FormattingSettingsCard{
         value: { value: "#fffff8" } // init value
     });
 
+    public circleBorderColor = new formattingSettings.ColorPicker({
+        name: "circleBorderColor",
+        displayName: "Color border", // name display on PBI
+        value: { value: "#333" } // init value
+    })
+
     public circleThickness = new formattingSettings.NumUpDown({
         name: "circleThickness", // name when call in visual.ts
         displayName: "Thickness", // name when display on PBI
@@ -51,8 +57,8 @@ export class CircleSettings extends FormattingSettingsCard{
 
 
     public name: string = "circle"; // name when call in visual.ts
-    public displayName: string = "Circle"; // name display on PBI
-    public slices: FormattingSettingsSlice[] = [this.circleColor, this.circleThickness] // display slice/ box to change value
+    public displayName: string = "Circle123"; // name display on PBI
+    public slices: FormattingSettingsSlice[] = [this.circleColor, this.circleBorderColor, this.circleThickness] // display slice/ box to change value
 }
 
 export class VisualSettings extends FormattingSettingsModel {

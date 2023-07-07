@@ -83,7 +83,7 @@ export class Visual implements IVisual {
         this.circle
             .style("fill", this.visualSettings.circle.circleColor.value.value) // style background color of the circle
             .style("fill-opacity", 1) // style background opacity of the circle
-            .style("stroke", "green") // style border color of the circle
+            .style("stroke", this.visualSettings.circle.circleBorderColor.value.value) // style border color of the circle
             .style("stroke-width", this.visualSettings.circle.circleThickness.value) // style border width of the circle
             .attr("r", radius) // assign radius of circle
             .attr("cx", width / 2)  // center of circle in the figure on x axes

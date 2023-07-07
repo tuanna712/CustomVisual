@@ -53,14 +53,19 @@ class CircleSettings extends FormattingSettingsCard {
             displayName: "Color",
             value: { value: "#fffff8" } // init value
         });
+        this.circleBorderColor = new powerbi_visuals_utils_formattingmodel__WEBPACK_IMPORTED_MODULE_0__/* .ColorPicker */ .zH({
+            name: "circleBorderColor",
+            displayName: "Color border",
+            value: { value: "#333" } // init value
+        });
         this.circleThickness = new powerbi_visuals_utils_formattingmodel__WEBPACK_IMPORTED_MODULE_0__/* .NumUpDown */ .L_({
             name: "circleThickness",
             displayName: "Thickness",
             value: 2 // init value
         });
         this.name = "circle"; // name when call in visual.ts
-        this.displayName = "Circle"; // name display on PBI
-        this.slices = [this.circleColor, this.circleThickness]; // display slice/ box to change value
+        this.displayName = "Circle123"; // name display on PBI
+        this.slices = [this.circleColor, this.circleBorderColor, this.circleThickness]; // display slice/ box to change value
     }
 }
 class VisualSettings extends FormattingSettingsModel {
@@ -147,7 +152,7 @@ class Visual {
         this.circle
             .style("fill", this.visualSettings.circle.circleColor.value.value) // style background color of the circle
             .style("fill-opacity", 1) // style background opacity of the circle
-            .style("stroke", "green") // style border color of the circle
+            .style("stroke", this.visualSettings.circle.circleBorderColor.value.value) // style border color of the circle
             .style("stroke-width", this.visualSettings.circle.circleThickness.value) // style border width of the circle
             .attr("r", radius) // assign radius of circle
             .attr("cx", width / 2) // center of circle in the figure on x axes
