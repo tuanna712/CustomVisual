@@ -1,0 +1,20 @@
+{
+  "visual": {
+    "name": "welllogvisual",
+    "displayName": "well_log_visual",
+    "guid": "welllogvisualACDAC7B9F83846788187EF5181E9191D",
+    "visualClassName": "Visual",
+    "version": "1.0.0",
+    "description": "",
+    "supportUrl": "",
+    "gitHubUrl": ""
+  },
+  "apiVersion": "5.1.0",
+  "author": { "name": "", "email": "" },
+  "assets": { "icon": "assets/icon.png" },
+  "externalJS": null,
+  "style": "style/visual.less",
+  "capabilities": "capabilities.json",
+  "dependencies": null,
+  "stringResources": []
+}
