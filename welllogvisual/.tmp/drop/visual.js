@@ -7,9 +7,9 @@ var welllogvisualACDAC7B9F83846788187EF5181E9191D_DEBUG;
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   J: () => (/* binding */ VisualSettings)
+/* harmony export */   Jx: () => (/* binding */ VisualSettings)
 /* harmony export */ });
-/* unused harmony export CircleSettings */
+/* unused harmony exports CircleSettings, TextValueSetting */
 /* harmony import */ var powerbi_visuals_utils_formattingmodel__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6084);
 /*
  *  Power BI Visualizations
@@ -56,7 +56,7 @@ class CircleSettings extends FormattingSettingsCard {
         this.circleBorderColor = new powerbi_visuals_utils_formattingmodel__WEBPACK_IMPORTED_MODULE_0__/* .ColorPicker */ .zH({
             name: "circleBorderColor",
             displayName: "Color border",
-            value: { value: "#333" } // init value
+            value: { value: "#E23737" } // init value
         });
         this.circleThickness = new powerbi_visuals_utils_formattingmodel__WEBPACK_IMPORTED_MODULE_0__/* .NumUpDown */ .L_({
             name: "circleThickness",
@@ -68,11 +68,59 @@ class CircleSettings extends FormattingSettingsCard {
         this.slices = [this.circleColor, this.circleBorderColor, this.circleThickness]; // display slice/ box to change value
     }
 }
+class TextValueSetting extends FormattingSettingsCard {
+    constructor() {
+        super(...arguments);
+        // display units
+        this.displayUnitsProperty = new powerbi_visuals_utils_formattingmodel__WEBPACK_IMPORTED_MODULE_0__/* .AutoDropdown */ .GN({
+            name: "displayUnitsProperty",
+            displayName: "display units",
+            value: 0
+        });
+        // font color
+        this.fontColor = new powerbi_visuals_utils_formattingmodel__WEBPACK_IMPORTED_MODULE_0__/* .ColorPicker */ .zH({
+            name: "fontColor",
+            displayName: "Font Color",
+            value: { value: "#333" }
+        });
+        //     font family
+        this.fontFamily = new powerbi_visuals_utils_formattingmodel__WEBPACK_IMPORTED_MODULE_0__/* .FontPicker */ .xp({
+            name: "fontFamily",
+            displayName: "Font Family",
+            value: "wf_standard-font, helvetica, arial, sans-serif"
+        });
+        this.fontSize = new powerbi_visuals_utils_formattingmodel__WEBPACK_IMPORTED_MODULE_0__/* .NumUpDown */ .L_({
+            name: "fontSize",
+            displayName: "Font Size",
+            value: 20
+        });
+        this.fontBold = new powerbi_visuals_utils_formattingmodel__WEBPACK_IMPORTED_MODULE_0__/* .ToggleSwitch */ .Zh({
+            name: "fontBold",
+            displayName: "Font Bold",
+            value: false
+        });
+        this.fontItalic = new powerbi_visuals_utils_formattingmodel__WEBPACK_IMPORTED_MODULE_0__/* .ToggleSwitch */ .Zh({
+            name: "fontItalic",
+            displayName: "Font Italic",
+            value: false
+        });
+        this.fontUnderline = new powerbi_visuals_utils_formattingmodel__WEBPACK_IMPORTED_MODULE_0__/* .ToggleSwitch */ .Zh({
+            name: "fontUnderline",
+            displayName: "Font Underline",
+            value: false
+        });
+        this.name = "textValue"; // name when call in visual.ts
+        this.displayName = "Text Value";
+        this.description = "Text Value Description";
+        this.slices = [this.displayUnitsProperty, this.fontColor, this.fontFamily, this.fontSize, this.fontBold, this.fontItalic, this.fontUnderline];
+    }
+}
 class VisualSettings extends FormattingSettingsModel {
     constructor() {
         super(...arguments);
         this.circle = new CircleSettings();
-        this.cards = [this.circle];
+        this.textValue = new TextValueSetting();
+        this.cards = [this.circle, this.textValue];
     }
 }
 
@@ -85,9 +133,11 @@ class VisualSettings extends FormattingSettingsModel {
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   u: () => (/* binding */ Visual)
 /* harmony export */ });
-/* harmony import */ var d3__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(662);
-/* harmony import */ var _settings__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7544);
-/* harmony import */ var powerbi_visuals_utils_formattingmodel__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(4261);
+/* harmony import */ var powerbi_visuals_api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3350);
+/* harmony import */ var powerbi_visuals_api__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(powerbi_visuals_api__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var d3__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(662);
+/* harmony import */ var _settings__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(7544);
+/* harmony import */ var powerbi_visuals_utils_formattingmodel__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(4261);
 /*
 *  Power BI Visual CLI
 *
@@ -119,10 +169,11 @@ class VisualSettings extends FormattingSettingsModel {
 
 
 
+
 class Visual {
     constructor(options) {
-        this.formattingSettingsService = new powerbi_visuals_utils_formattingmodel__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .Z();
-        this.svg = d3__WEBPACK_IMPORTED_MODULE_0__/* .select */ .Ys(options.element)
+        this.formattingSettingsService = new powerbi_visuals_utils_formattingmodel__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .Z();
+        this.svg = d3__WEBPACK_IMPORTED_MODULE_1__/* .select */ .Ys(options.element)
             .append('svg')
             .classed('circleCard', true);
         this.container = this.svg.append("g")
@@ -136,8 +187,8 @@ class Visual {
     }
     update(options) {
         // define variable for width, height
-        console.log(options);
-        debugger;
+        // console.log(options)
+        // debugger
         let dataView = options.dataViews[0]; // get data
         let width = options.viewport.width; // width of figure
         let height = options.viewport.height; // height of figure
@@ -145,7 +196,7 @@ class Visual {
         this.svg.attr("width", width);
         this.svg.attr("height", height);
         let radius = Math.min(width, height) / 2.2; // radius of cirle
-        this.visualSettings = this.formattingSettingsService.populateFormattingSettingsModel(_settings__WEBPACK_IMPORTED_MODULE_1__/* .VisualSettings */ .J, options.dataViews);
+        this.visualSettings = this.formattingSettingsService.populateFormattingSettingsModel(_settings__WEBPACK_IMPORTED_MODULE_2__/* .VisualSettings */ .Jx, options.dataViews);
         this.visualSettings.circle.circleThickness.value = Math.max(0, this.visualSettings.circle.circleThickness.value);
         this.visualSettings.circle.circleThickness.value = Math.min(20, this.visualSettings.circle.circleThickness.value);
         // property of circle
@@ -159,13 +210,30 @@ class Visual {
             .attr("cy", height / 2); // center of circle in the figure on y axes
         let fontSizeValue = Math.min(width, height) / 4;
         // text value
+        var bold = "normal";
+        var italic = "normal";
+        var underline = "none";
+        if (this.visualSettings.textValue.fontBold.value == true) {
+            bold = "bold";
+        }
+        if (this.visualSettings.textValue.fontItalic.value == true) {
+            italic = "italic";
+        }
+        if (this.visualSettings.textValue.fontUnderline.value == true) {
+            underline = "underline";
+        }
         this.textValue
             .text(dataView.categorical.values[0].values.toString()) // value in circle chart
             .attr("x", "50%") // position of text in the circle on x axes
             .attr("y", "50%") // position of text in the circle on y axes
             .attr("dy", "0.35em")
             .attr("text-anchor", "middle")
-            .style("font-size", fontSizeValue + "px");
+            .attr("font-family", this.visualSettings.textValue.fontFamily.value)
+            .style("font-size", this.visualSettings.textValue.fontSize.value.toString() + "px")
+            .style("fill", this.visualSettings.textValue.fontColor.value.value)
+            .style("font-weight", bold)
+            .style("font-style", italic)
+            .style("text-decoration", underline);
         let fontSizeLabel = fontSizeValue / 4;
         //  text label
         this.textLabel
@@ -177,7 +245,178 @@ class Visual {
             .style("font-size", fontSizeLabel + "px");
     }
     getFormattingModel() {
-        return this.formattingSettingsService.buildFormattingModel(this.visualSettings);
+        var visCirle = this.visualSettings.circle;
+        var visTextValue = this.visualSettings.textValue;
+        let circle = {
+            description: "Circle Description",
+            displayName: "Circle",
+            uid: "Circle_uid",
+            groups: [
+                {
+                    displayName: "Circle",
+                    uid: "circle_uid",
+                    slices: [
+                        {
+                            uid: "circleColor_uid",
+                            displayName: "Circle Color",
+                            control: {
+                                type: "ColorPicker" /* powerbi.visuals.FormattingComponent.ColorPicker */,
+                                properties: {
+                                    descriptor: {
+                                        objectName: "circle",
+                                        propertyName: "circleColor"
+                                    },
+                                    value: { value: visCirle.circleColor.value.value }
+                                }
+                            }
+                        },
+                        {
+                            uid: "circleBorderColor_uid",
+                            displayName: "Circle Border Color",
+                            control: {
+                                type: "ColorPicker" /* powerbi.visuals.FormattingComponent.ColorPicker */,
+                                properties: {
+                                    descriptor: {
+                                        objectName: "circle",
+                                        propertyName: "circleBorderColor"
+                                    },
+                                    value: { value: visCirle.circleBorderColor.value.value }
+                                }
+                            }
+                        },
+                        {
+                            uid: "circle_Thickness_uid",
+                            displayName: "Circle Thickness",
+                            control: {
+                                type: "NumUpDown" /* powerbi.visuals.FormattingComponent.NumUpDown */,
+                                properties: {
+                                    descriptor: {
+                                        objectName: "circle",
+                                        propertyName: "circleThickness"
+                                    },
+                                    value: visCirle.circleThickness.value
+                                }
+                            }
+                        }
+                    ]
+                },
+            ]
+        };
+        let textValue = {
+            description: "Text value Description",
+            displayName: "Text Value",
+            uid: "textValue_uid",
+            groups: []
+        };
+        let group1_dataFont = {
+            displayName: "Font Control Group",
+            uid: "textValue_fontControl_group_uid",
+            slices: [
+                // simple slice: 
+                {
+                    uid: "textValue_fontControl_displayUnits_uid",
+                    displayName: "display units",
+                    control: {
+                        type: "Dropdown" /* powerbi.visuals.FormattingComponent.Dropdown */,
+                        properties: {
+                            descriptor: {
+                                objectName: "textValue",
+                                propertyName: "displayUnitsProperty",
+                            },
+                            value: 0
+                        }
+                    }
+                },
+                {
+                    uid: "data_font_control_slice_uid",
+                    displayName: "Font",
+                    control: {
+                        type: "FontControl" /* powerbi.visuals.FormattingComponent.FontControl */,
+                        properties: {
+                            fontFamily: {
+                                descriptor: {
+                                    objectName: "textValue",
+                                    propertyName: "fontFamily"
+                                },
+                                value: visTextValue.fontFamily.value
+                            },
+                            fontSize: {
+                                descriptor: {
+                                    objectName: "textValue",
+                                    propertyName: "fontSize"
+                                },
+                                value: visTextValue.fontSize.value
+                            },
+                            bold: {
+                                descriptor: {
+                                    objectName: "textValue",
+                                    propertyName: "fontBold"
+                                },
+                                value: visTextValue.fontBold.value
+                            },
+                            italic: {
+                                descriptor: {
+                                    objectName: "textValue",
+                                    propertyName: "fontItalic"
+                                },
+                                value: visTextValue.fontItalic.value
+                            },
+                            underline: {
+                                descriptor: {
+                                    objectName: "textValue",
+                                    propertyName: "fontUnderline"
+                                },
+                                value: visTextValue.fontUnderline.value
+                            }
+                        }
+                    }
+                }
+            ]
+        };
+        let group2_dataDesign = {
+            displayName: "Data Design Group",
+            uid: "textValue_dataDesign_group_uid",
+            slices: [
+                // font color
+                {
+                    displayName: "Font Color",
+                    uid: "textValue_dataDesign_fontColor_slice",
+                    control: {
+                        type: "ColorPicker" /* powerbi.visuals.FormattingComponent.ColorPicker */,
+                        properties: {
+                            descriptor: {
+                                objectName: "textValue",
+                                propertyName: "fontColor"
+                            },
+                            value: { value: visTextValue.fontColor.value.value }
+                        }
+                    }
+                },
+                // Align
+                {
+                    displayName: "Line Alignment",
+                    uid: "textValue_dataDesign_lineAlignment_slice",
+                    control: {
+                        type: "AlignmentGroup" /* powerbi.visuals.FormattingComponent.AlignmentGroup */,
+                        properties: {
+                            descriptor: {
+                                objectName: "textValue",
+                                propertyName: "lineAlignment"
+                            },
+                            mode: "horizontalAlignment" /* powerbi.visuals.AlignmentGroupMode.Horizonal */,
+                            value: "right"
+                        }
+                    }
+                }
+            ]
+        };
+        // add formating group to textValue
+        textValue.groups.push(group1_dataFont);
+        textValue.groups.push(group2_dataDesign);
+        // Build and return formatting model with data card
+        const formattingModel = { cards: [circle, textValue] };
+        return formattingModel;
+        // return this.formattingSettingsService.buildFormattingModel(this.visualSettings);
     }
 }
 
@@ -9617,12 +9856,15 @@ var dependencies = {"d3-array":"1","d3-axis":"1","d3-brush":"1","d3-chord":"1","
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   GN: () => (/* binding */ AutoDropdown),
 /* harmony export */   Hn: () => (/* binding */ Model),
 /* harmony export */   L_: () => (/* binding */ NumUpDown),
 /* harmony export */   Zb: () => (/* binding */ Card),
+/* harmony export */   Zh: () => (/* binding */ ToggleSwitch),
+/* harmony export */   xp: () => (/* binding */ FontPicker),
 /* harmony export */   zH: () => (/* binding */ ColorPicker)
 /* harmony export */ });
-/* unused harmony exports SimpleSlice, AlignmentGroup, ToggleSwitch, Slider, DatePicker, ItemDropdown, AutoDropdown, DurationPicker, ErrorRangeControl, FieldPicker, ItemFlagsSelection, AutoFlagsSelection, TextInput, TextArea, FontPicker, GradientBar, ImageUpload, ListEditor, ReadOnlyText, ShapeMapSelector, CompositeSlice, FontControl, MarginPadding, Container, ContainerItem */
+/* unused harmony exports SimpleSlice, AlignmentGroup, Slider, DatePicker, ItemDropdown, DurationPicker, ErrorRangeControl, FieldPicker, ItemFlagsSelection, AutoFlagsSelection, TextInput, TextArea, GradientBar, ImageUpload, ListEditor, ReadOnlyText, ShapeMapSelector, CompositeSlice, FontControl, MarginPadding, Container, ContainerItem */
 /* harmony import */ var _utils_FormattingSettingsUtils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3827);
 /**
  * Powerbi utils components classes for custom visual formatting pane objects
@@ -9693,7 +9935,7 @@ class AlignmentGroup extends (/* unused pure expression or super */ null && (Sim
         return Object.assign(Object.assign({}, super.getFormattingComponent(objectName)), { mode: this.mode, supportsNoSelection: this.supportsNoSelection });
     }
 }
-class ToggleSwitch extends (/* unused pure expression or super */ null && (SimpleSlice)) {
+class ToggleSwitch extends SimpleSlice {
     constructor(object) {
         super(object);
         this.type = "ToggleSwitch" /* visuals.FormattingComponent.ToggleSwitch */;
@@ -9741,7 +9983,7 @@ class ItemDropdown extends (/* unused pure expression or super */ null && (Simpl
         return Object.assign(Object.assign({}, super.getFormattingComponent(objectName)), { items: this.items });
     }
 }
-class AutoDropdown extends (/* unused pure expression or super */ null && (SimpleSlice)) {
+class AutoDropdown extends SimpleSlice {
     constructor(object) {
         super(object);
         this.type = "Dropdown" /* visuals.FormattingComponent.Dropdown */;
@@ -9807,7 +10049,7 @@ class TextArea extends (/* unused pure expression or super */ null && (TextInput
         this.type = "TextArea" /* visuals.FormattingComponent.TextArea */;
     }
 }
-class FontPicker extends (/* unused pure expression or super */ null && (SimpleSlice)) {
+class FontPicker extends SimpleSlice {
     constructor() {
         super(...arguments);
         this.type = "FontPicker" /* visuals.FormattingComponent.FontPicker */;
@@ -10136,6 +10378,13 @@ function getPropertyValue(slice, value, defaultValue) {
 
 module.exports = Function('return this')();
 
+/***/ }),
+
+/***/ 3350:
+/***/ ((module) => {
+
+module.exports = null;
+
 /***/ })
 
 /******/ 	});
@@ -10165,6 +10414,18 @@ module.exports = Function('return this')();
 /******/ 	}
 /******/ 	
 /************************************************************************/
+/******/ 	/* webpack/runtime/compat get default export */
+/******/ 	(() => {
+/******/ 		// getDefaultExport function for compatibility with non-harmony modules
+/******/ 		__webpack_require__.n = (module) => {
+/******/ 			var getter = module && module.__esModule ?
+/******/ 				() => (module['default']) :
+/******/ 				() => (module);
+/******/ 			__webpack_require__.d(getter, { a: getter });
+/******/ 			return getter;
+/******/ 		};
+/******/ 	})();
+/******/ 	
 /******/ 	/* webpack/runtime/define property getters */
 /******/ 	(() => {
 /******/ 		// define getter functions for harmony exports

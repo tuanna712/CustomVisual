@@ -35,8 +35,8 @@ import IVisualHost = powerbi.extensibility.IVisualHost;
 import * as d3 from "d3";
 type Selection<T extends d3.BaseType> = d3.Selection<T, any, any, any>;
 
-import { VisualSettings } from "./settings";
-import { FormattingSettingsService } from "powerbi-visuals-utils-formattingmodel";
+import { CircleSettings, VisualSettings } from "./settings";
+import { FormattingSettingsService, formattingSettings } from "powerbi-visuals-utils-formattingmodel";
 
 export class Visual implements IVisual {
     private host : IVisualHost;
@@ -66,8 +66,8 @@ export class Visual implements IVisual {
 
     public update(options: VisualUpdateOptions) {
         // define variable for width, height
-        console.log(options)
-        debugger
+        // console.log(options)
+        // debugger
         let dataView: DataView = options.dataViews[0] // get data
         let width: number = options.viewport.width; // width of figure
         let height: number = options.viewport.height; // height of figure
@@ -90,13 +90,35 @@ export class Visual implements IVisual {
             .attr("cy", height / 2); // center of circle in the figure on y axes
         let fontSizeValue: number = Math.min(width, height) / 4;
         // text value
+        var bold:string = "normal"
+        var italic:string = "normal"
+        var underline:string = "none"
+        if (this.visualSettings.textValue.fontBold.value == true){
+            bold = "bold"
+        }
+
+        if (this.visualSettings.textValue.fontItalic.value == true){
+            italic = "italic"
+        }
+        if (this.visualSettings.textValue.fontUnderline.value == true){
+            underline = "underline"
+        }
+        
         this.textValue
             .text(dataView.categorical.values[0].values.toString()) // value in circle chart
             .attr("x", "50%") // position of text in the circle on x axes
             .attr("y", "50%") // position of text in the circle on y axes
             .attr("dy", "0.35em")
             .attr("text-anchor", "middle")
-            .style("font-size", fontSizeValue + "px");
+            .attr("font-family", this.visualSettings.textValue.fontFamily.value)
+            .style("font-size", this.visualSettings.textValue.fontSize.value.toString() + "px")
+            .style("fill", this.visualSettings.textValue.fontColor.value.value)
+            .style("font-weight", bold)
+            .style("font-style", italic)
+            .style("text-decoration", underline)
+
+
+            
         let fontSizeLabel: number = fontSizeValue / 4;
         //  text label
         this.textLabel
@@ -108,7 +130,187 @@ export class Visual implements IVisual {
             .style("font-size", fontSizeLabel + "px");
     }
     public getFormattingModel(): powerbi.visuals.FormattingModel {
-        return this.formattingSettingsService.buildFormattingModel(this.visualSettings);
+        var visCirle = this.visualSettings.circle
+        var visTextValue = this.visualSettings.textValue
+
+        let circle:powerbi.visuals.FormattingCard = {
+            description: "Circle Description",
+            displayName: "Circle",
+            uid: "Circle_uid",
+            groups: [
+                {
+                    displayName: "Circle",
+                    uid: "circle_uid",
+                    slices:[
+                        {
+                            uid: "circleColor_uid",
+                            displayName: "Circle Color",
+                            control: {
+                                type: powerbi.visuals.FormattingComponent.ColorPicker,
+                                properties: {
+                                    descriptor: {
+                                        objectName: "circle",
+                                        propertyName: "circleColor"
+                                    },
+                                    value: { value: visCirle.circleColor.value.value }
+                                }
+                            }
+                        },
+                        {
+                            uid: "circleBorderColor_uid",
+                            displayName: "Circle Border Color",
+                            control: {
+                                type: powerbi.visuals.FormattingComponent.ColorPicker,
+                                properties: {
+                                    descriptor: {
+                                        objectName: "circle",
+                                        propertyName: "circleBorderColor"
+                                    },
+                                    value: { value: visCirle.circleBorderColor.value.value }
+                                }
+                            }
+                        },
+                        {
+                            uid: "circle_Thickness_uid",
+                            displayName: "Circle Thickness",
+                            control: {
+                                type: powerbi.visuals.FormattingComponent.NumUpDown,
+                                properties: {
+                                    descriptor: {
+                                        objectName: "circle",
+                                        propertyName: "circleThickness"
+                                    },
+                                    value: visCirle.circleThickness.value
+                                }
+                            }
+                        }
+                    ]
+                }, 
+                
+            ]
+        }
+        let textValue: powerbi.visuals.FormattingCard = {
+            description: "Text value Description",
+            displayName: "Text Value",
+            uid: "textValue_uid",
+            groups: []
+        }
+
+        let group1_dataFont: powerbi.visuals.FormattingGroup = {
+            displayName: "Font Control Group",
+            uid: "textValue_fontControl_group_uid",
+            slices: [
+                // simple slice: 
+                {
+                    uid: "textValue_fontControl_displayUnits_uid",
+                    displayName: "display units",
+                    control: {
+                        type: powerbi.visuals.FormattingComponent.Dropdown,
+                        properties: {
+                            descriptor: {
+                                objectName: "textValue",
+                                propertyName: "displayUnitsProperty",
+                            },
+                            value: 0
+                        }
+                    }
+
+                },
+
+                {
+                    uid: "data_font_control_slice_uid",
+                    displayName: "Font",
+                    control: {
+                        type: powerbi.visuals.FormattingComponent.FontControl,
+                        properties: {
+                            fontFamily: {
+                                descriptor: {
+                                    objectName: "textValue",
+                                    propertyName: "fontFamily"
+                                },
+                                value: visTextValue.fontFamily.value
+                            },
+                            fontSize: {
+                                descriptor: {
+                                    objectName: "textValue",
+                                    propertyName: "fontSize"
+                                },
+                                value: visTextValue.fontSize.value
+                            },
+                            bold: {
+                                descriptor: {
+                                    objectName: "textValue", 
+                                    propertyName: "fontBold"
+                                },
+                                value: visTextValue.fontBold.value
+                            },
+                            italic: {
+                                descriptor: {
+                                    objectName: "textValue", 
+                                    propertyName: "fontItalic"
+                                },
+                                value: visTextValue.fontItalic.value
+                            },
+                            underline: {
+                                descriptor: {
+                                    objectName: "textValue",
+                                    propertyName: "fontUnderline"
+                                },
+                                value: visTextValue.fontUnderline.value
+                            }
+
+                        }
+                    }
+                }
+            ]
+        }
+
+        let group2_dataDesign: powerbi.visuals.FormattingGroup = {
+            displayName: "Data Design Group",
+            uid: "textValue_dataDesign_group_uid",
+            slices: [
+                // font color
+                {
+                    displayName: "Font Color",
+                    uid: "textValue_dataDesign_fontColor_slice",
+                    control: {
+                        type: powerbi.visuals.FormattingComponent.ColorPicker,
+                        properties: {
+                            descriptor: {
+                                objectName: "textValue",
+                                propertyName: "fontColor"
+                            },
+                            value: { value: visTextValue.fontColor.value.value}
+                        }
+                    }
+                },
+                // Align
+                {
+                    displayName: "Line Alignment",
+                    uid: "textValue_dataDesign_lineAlignment_slice",
+                    control: {
+                        type: powerbi.visuals.FormattingComponent.AlignmentGroup,
+                        properties: {
+                            descriptor: {
+                                objectName: "textValue",
+                                propertyName: "lineAlignment"
+                            },
+                            mode: powerbi.visuals.AlignmentGroupMode.Horizonal,
+                            value: "right"
+                        }
+                    }
+                }
+            ]
+        }
+
+        // add formating group to textValue
+        textValue.groups.push(group1_dataFont)
+        textValue.groups.push(group2_dataDesign)
+
+        // Build and return formatting model with data card
+        const formattingModel: powerbi.visuals.FormattingModel = { cards: [circle, textValue] };
+        return formattingModel
+        // return this.formattingSettingsService.buildFormattingModel(this.visualSettings);
     }
 
     /**

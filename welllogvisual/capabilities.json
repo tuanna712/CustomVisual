@@ -38,6 +38,62 @@
           }
         }
       }
+    },
+    "textValue": {
+      "properties": {
+        "displayUnitsProperty": {
+          "type": {
+            "formatting": {
+              "labelDisplayUnits": true
+            }
+          }
+        },
+        "fontSize": {
+          "type": {
+            "formatting": {
+              "fontSize": true
+            }
+          }
+        },
+        "fontFamily": {
+          "type": {
+            "formatting": {
+              "fontFamily": true
+            }
+          }
+        },
+        "fontBold": {
+          "type": {
+            "bool": true
+          }
+        },
+        "fontUnderline": {
+          "type": {
+            "bool": true
+          }
+        },
+        "fontItalic": {
+          "type": {
+            "bool": true
+          }
+        },
+        "fontColor": {
+          "type": {
+            "fill": {
+              "solid": {
+                "color": true
+              }
+            }
+          }
+        },
+        "lineAlignment": {
+          "type": {
+            "formatting": {
+              "alignment": true
+            }
+          }
+        }
+      }
     }
   },
   "dataViewMappings": [

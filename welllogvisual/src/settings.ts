@@ -46,7 +46,7 @@ export class CircleSettings extends FormattingSettingsCard{
     public circleBorderColor = new formattingSettings.ColorPicker({
         name: "circleBorderColor",
         displayName: "Color border", // name display on PBI
-        value: { value: "#333" } // init value
+        value: { value: "#E23737" } // init value
     })
 
     public circleThickness = new formattingSettings.NumUpDown({
@@ -61,7 +61,61 @@ export class CircleSettings extends FormattingSettingsCard{
     public slices: FormattingSettingsSlice[] = [this.circleColor, this.circleBorderColor, this.circleThickness] // display slice/ box to change value
 }
 
+export class TextValueSetting extends FormattingSettingsCard{
+    // display units
+    public displayUnitsProperty  = new formattingSettings.AutoDropdown({
+        name:"displayUnitsProperty",
+        displayName: "display units",
+        value: 0
+    })
+    // font color
+   public fontColor = new formattingSettings.ColorPicker({
+    name: "fontColor",
+    displayName: "Font Color",
+    value: {value: "#333"}
+   })
+//     font family
+   public fontFamily = new formattingSettings.FontPicker({
+    name: "fontFamily",
+    displayName: "Font Family",
+    value: "wf_standard-font, helvetica, arial, sans-serif"
+   })
+
+   public fontSize = new formattingSettings.NumUpDown({
+    name: "fontSize",
+    displayName: "Font Size",
+    value: 20
+   })
+
+   public fontBold = new formattingSettings.ToggleSwitch({
+    name: "fontBold",
+    displayName: "Font Bold",
+    value: false
+   })
+
+   public fontItalic = new formattingSettings.ToggleSwitch({
+    name: "fontItalic",
+    displayName: "Font Italic",
+    value: false
+   })
+   public fontUnderline = new formattingSettings.ToggleSwitch({
+    name: "fontUnderline",
+    displayName: "Font Underline",
+    value: false
+   })
+
+
+    
+    
+
+    public name: string = "textValue"; // name when call in visual.ts
+    public displayName: string = "Text Value";
+    public description?: string = "Text Value Description";
+    public slices: FormattingSettingsSlice[] = [this.displayUnitsProperty, this.fontColor, this.fontFamily, this.fontSize, this.fontBold, this.fontItalic, this.fontUnderline ]
+}
+
 export class VisualSettings extends FormattingSettingsModel {
     public circle: CircleSettings = new CircleSettings();
-    public cards: FormattingSettingsCard[] = [this.circle];
+    public textValue: TextValueSetting = new TextValueSetting()
+    public cards: FormattingSettingsCard[] = [this.circle, this.textValue];
 }
