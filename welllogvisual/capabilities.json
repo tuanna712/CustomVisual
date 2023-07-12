@@ -1,19 +1,54 @@
 {
   "dataRoles": [
     {
-      "displayName": "Category Data",
+      "displayName": "My Category Data",
       "name": "category",
       "kind": "Grouping"
     },
     {
-      "displayName": "Measure Data",
+      "displayName": "My Measure Data",
       "name": "measure",
       "kind": "Measure"
+    },
+    {
+      "displayName": "My Measure Data",
+      "name": "measure",
+      "kind": "Measure"
+    }
+  ],
+  "dataViewMappings": [
+    {
+      "categorical": {
+        "categories": {
+          "for": {
+            "in": "category"
+          },
+          "dataReductionAlgorithm": {
+            "top": {}
+          }
+        },
+
+        "values": {
+          "select": [
+            {
+              "bind": {
+                "to": "measure"
+              }
+            }
+          ]
+        }
+      },
+      "single": {
+        "role": "measure"
+      }
     }
   ],
   "objects": {
     "circle": {
       "properties": {
+        "show": {
+          "type": { "bool": true }
+        },
         "circleColor": {
           "type": {
             "fill": {
@@ -41,6 +76,9 @@
     },
     "textValue": {
       "properties": {
+        "show": {
+          "type": { "bool": true }
+        },
         "displayUnitsProperty": {
           "type": {
             "formatting": {
@@ -96,28 +134,8 @@
       }
     }
   },
-  "dataViewMappings": [
-    {
-      "categorical": {
-        "categories": {
-          "for": {
-            "in": "category"
-          },
-          "dataReductionAlgorithm": {
-            "top": {}
-          }
-        },
-        "values": {
-          "select": [
-            {
-              "bind": {
-                "to": "measure"
-              }
-            }
-          ]
-        }
-      }
-    }
-  ],
+  "sorting": {
+    "default": {}
+  },
   "privileges": []
 }

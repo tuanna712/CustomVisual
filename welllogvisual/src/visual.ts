@@ -35,7 +35,7 @@ import IVisualHost = powerbi.extensibility.IVisualHost;
 import * as d3 from "d3";
 type Selection<T extends d3.BaseType> = d3.Selection<T, any, any, any>;
 
-import { CircleSettings, VisualSettings } from "./settings";
+import { VisualSettings } from "./settings";
 import { FormattingSettingsService, formattingSettings } from "powerbi-visuals-utils-formattingmodel";
 
 export class Visual implements IVisual {
@@ -46,11 +46,13 @@ export class Visual implements IVisual {
     private textValue: Selection<SVGElement>;
     private textLabel: Selection<SVGElement>;
 
+    // visual setting from setting
     private visualSettings: VisualSettings;
     private formattingSettingsService: FormattingSettingsService;
 
     constructor(options: VisualConstructorOptions) {
         this.formattingSettingsService = new FormattingSettingsService();
+        // create svg element
         this.svg = d3.select(options.element)
             .append('svg')
             .classed('circleCard', true);
@@ -62,6 +64,7 @@ export class Visual implements IVisual {
             .classed("textValue", true);
         this.textLabel = this.container.append("text")
             .classed("textLabel", true);
+        
     }
 
     public update(options: VisualUpdateOptions) {
@@ -105,7 +108,8 @@ export class Visual implements IVisual {
         }
         
         this.textValue
-            .text(dataView.categorical.values[0].values.toString()) // value in circle chart
+            // .text(dataView.categorical.values[0].values.toString()) // value in circle chart
+            .text(dataView.single.value.toString())
             .attr("x", "50%") // position of text in the circle on x axes
             .attr("y", "50%") // position of text in the circle on y axes
             .attr("dy", "0.35em")
@@ -137,6 +141,20 @@ export class Visual implements IVisual {
             description: "Circle Description",
             displayName: "Circle",
             uid: "Circle_uid",
+            topLevelToggle: {
+                uid: "circle_topLevelToggle_showToggleSwitch_uid",
+                suppressDisplayName: true,
+                control: {
+                    type: powerbi.visuals.FormattingComponent.ToggleSwitch,
+                    properties: {
+                        descriptor: {
+                            objectName: "circle",
+                            propertyName: "show"
+                        },
+                        value: visCirle.circleShow.value
+                    }
+                }
+            },
             groups: [
                 {
                     displayName: "Circle",
@@ -187,13 +205,74 @@ export class Visual implements IVisual {
                     ]
                 }, 
                 
+            ],
+            revertToDefaultDescriptors: [
+                {
+                    objectName: "circle",
+                    propertyName: "circleColor"
+                },
+                {
+                    objectName: "circle",
+                    propertyName: "circleBoderColor"
+                },
+                {
+                    objectName: "circle",
+                    propertyName: "circleThickness"
+                },
             ]
         }
         let textValue: powerbi.visuals.FormattingCard = {
             description: "Text value Description",
             displayName: "Text Value",
             uid: "textValue_uid",
-            groups: []
+            topLevelToggle: {
+                uid: "textValue_topLevelToggle_showToggleSwitch_uid",
+                suppressDisplayName: true,
+                control: {
+                    type: powerbi.visuals.FormattingComponent.ToggleSwitch,
+                    properties: {
+                        descriptor: {
+                            objectName: "textValue",
+                            propertyName: "show"
+                        },
+                        value: visTextValue.textValueShow.value
+                    }
+                }
+            },
+            groups: [],
+            
+            revertToDefaultDescriptors: [
+                {
+                    objectName: "textValue",
+                    propertyName:"displayUnitsProperty"
+                },
+                {
+                    objectName: "textValue",
+                    propertyName: "fontFamily"
+                },
+                {
+                    objectName: "textValue",
+                    propertyName: "fontSize"
+                },
+                {
+                    objectName: "textValue",
+                    propertyName: "fontColor"
+                },
+                {
+                    objectName: "textValue",
+                    propertyName: "fontBold",
+                },
+                {
+                    objectName: "textValue",
+                    propertyName: "fontItalic"
+                },
+                {
+                    objectName: "textValue",
+                    propertyName: "fontUnderline"
+                },
+        
+                // ... the rest of properties descriptors 
+            ]
         }
 
         let group1_dataFont: powerbi.visuals.FormattingGroup = {
@@ -306,7 +385,7 @@ export class Visual implements IVisual {
         // add formating group to textValue
         textValue.groups.push(group1_dataFont)
         textValue.groups.push(group2_dataDesign)
-
+        
         // Build and return formatting model with data card
         const formattingModel: powerbi.visuals.FormattingModel = { cards: [circle, textValue] };
         return formattingModel

@@ -36,6 +36,12 @@ import FormattingSettingsModel = formattingSettings.Model;
  * Data Point Formatting Card
  */
 export class CircleSettings extends FormattingSettingsCard{
+    public circleShow = new formattingSettings.ToggleSwitch({
+        name: "show",
+        displayName: undefined,
+        value: true,
+        topLevelToggle: true
+    })
     // 1st property is color, declare and init for color by a object of formattingSetting.ColorPicker
     public circleColor = new formattingSettings.ColorPicker({
         name: "circleColor", // name when call in visual.ts
@@ -58,10 +64,16 @@ export class CircleSettings extends FormattingSettingsCard{
 
     public name: string = "circle"; // name when call in visual.ts
     public displayName: string = "Circle123"; // name display on PBI
-    public slices: FormattingSettingsSlice[] = [this.circleColor, this.circleBorderColor, this.circleThickness] // display slice/ box to change value
+    public slices: FormattingSettingsSlice[] = [this.circleShow, this.circleColor, this.circleBorderColor, this.circleThickness] // display slice/ box to change value
 }
 
 export class TextValueSetting extends FormattingSettingsCard{
+    public textValueShow = new formattingSettings.ToggleSwitch({
+        name: "show",
+        displayName: undefined,
+        value: true,
+        topLevelToggle: true
+    })
     // display units
     public displayUnitsProperty  = new formattingSettings.AutoDropdown({
         name:"displayUnitsProperty",
@@ -104,14 +116,10 @@ export class TextValueSetting extends FormattingSettingsCard{
     value: false
    })
 
-
-    
-    
-
     public name: string = "textValue"; // name when call in visual.ts
     public displayName: string = "Text Value";
     public description?: string = "Text Value Description";
-    public slices: FormattingSettingsSlice[] = [this.displayUnitsProperty, this.fontColor, this.fontFamily, this.fontSize, this.fontBold, this.fontItalic, this.fontUnderline ]
+    public slices: FormattingSettingsSlice[] = [this.textValueShow, this.displayUnitsProperty, this.fontColor, this.fontFamily, this.fontSize, this.fontBold, this.fontItalic, this.fontUnderline ]
 }
 
 export class VisualSettings extends FormattingSettingsModel {

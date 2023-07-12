@@ -47,6 +47,12 @@ var FormattingSettingsModel = powerbi_visuals_utils_formattingmodel__WEBPACK_IMP
 class CircleSettings extends FormattingSettingsCard {
     constructor() {
         super(...arguments);
+        this.circleShow = new powerbi_visuals_utils_formattingmodel__WEBPACK_IMPORTED_MODULE_0__/* .ToggleSwitch */ .Zh({
+            name: "show",
+            displayName: undefined,
+            value: true,
+            topLevelToggle: true
+        });
         // 1st property is color, declare and init for color by a object of formattingSetting.ColorPicker
         this.circleColor = new powerbi_visuals_utils_formattingmodel__WEBPACK_IMPORTED_MODULE_0__/* .ColorPicker */ .zH({
             name: "circleColor",
@@ -65,12 +71,18 @@ class CircleSettings extends FormattingSettingsCard {
         });
         this.name = "circle"; // name when call in visual.ts
         this.displayName = "Circle123"; // name display on PBI
-        this.slices = [this.circleColor, this.circleBorderColor, this.circleThickness]; // display slice/ box to change value
+        this.slices = [this.circleShow, this.circleColor, this.circleBorderColor, this.circleThickness]; // display slice/ box to change value
     }
 }
 class TextValueSetting extends FormattingSettingsCard {
     constructor() {
         super(...arguments);
+        this.textValueShow = new powerbi_visuals_utils_formattingmodel__WEBPACK_IMPORTED_MODULE_0__/* .ToggleSwitch */ .Zh({
+            name: "show",
+            displayName: undefined,
+            value: true,
+            topLevelToggle: true
+        });
         // display units
         this.displayUnitsProperty = new powerbi_visuals_utils_formattingmodel__WEBPACK_IMPORTED_MODULE_0__/* .AutoDropdown */ .GN({
             name: "displayUnitsProperty",
@@ -112,7 +124,7 @@ class TextValueSetting extends FormattingSettingsCard {
         this.name = "textValue"; // name when call in visual.ts
         this.displayName = "Text Value";
         this.description = "Text Value Description";
-        this.slices = [this.displayUnitsProperty, this.fontColor, this.fontFamily, this.fontSize, this.fontBold, this.fontItalic, this.fontUnderline];
+        this.slices = [this.textValueShow, this.displayUnitsProperty, this.fontColor, this.fontFamily, this.fontSize, this.fontBold, this.fontItalic, this.fontUnderline];
     }
 }
 class VisualSettings extends FormattingSettingsModel {
@@ -173,6 +185,7 @@ class VisualSettings extends FormattingSettingsModel {
 class Visual {
     constructor(options) {
         this.formattingSettingsService = new powerbi_visuals_utils_formattingmodel__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .Z();
+        // create svg element
         this.svg = d3__WEBPACK_IMPORTED_MODULE_1__/* .select */ .Ys(options.element)
             .append('svg')
             .classed('circleCard', true);
@@ -223,7 +236,8 @@ class Visual {
             underline = "underline";
         }
         this.textValue
-            .text(dataView.categorical.values[0].values.toString()) // value in circle chart
+            // .text(dataView.categorical.values[0].values.toString()) // value in circle chart
+            .text(dataView.single.value.toString())
             .attr("x", "50%") // position of text in the circle on x axes
             .attr("y", "50%") // position of text in the circle on y axes
             .attr("dy", "0.35em")
@@ -251,6 +265,20 @@ class Visual {
             description: "Circle Description",
             displayName: "Circle",
             uid: "Circle_uid",
+            topLevelToggle: {
+                uid: "circle_topLevelToggle_showToggleSwitch_uid",
+                suppressDisplayName: true,
+                control: {
+                    type: "ToggleSwitch" /* powerbi.visuals.FormattingComponent.ToggleSwitch */,
+                    properties: {
+                        descriptor: {
+                            objectName: "circle",
+                            propertyName: "show"
+                        },
+                        value: visCirle.circleShow.value
+                    }
+                }
+            },
             groups: [
                 {
                     displayName: "Circle",
@@ -300,13 +328,72 @@ class Visual {
                         }
                     ]
                 },
+            ],
+            revertToDefaultDescriptors: [
+                {
+                    objectName: "circle",
+                    propertyName: "circleColor"
+                },
+                {
+                    objectName: "circle",
+                    propertyName: "circleBoderColor"
+                },
+                {
+                    objectName: "circle",
+                    propertyName: "circleThickness"
+                },
             ]
         };
         let textValue = {
             description: "Text value Description",
             displayName: "Text Value",
             uid: "textValue_uid",
-            groups: []
+            topLevelToggle: {
+                uid: "textValue_topLevelToggle_showToggleSwitch_uid",
+                suppressDisplayName: true,
+                control: {
+                    type: "ToggleSwitch" /* powerbi.visuals.FormattingComponent.ToggleSwitch */,
+                    properties: {
+                        descriptor: {
+                            objectName: "textValue",
+                            propertyName: "show"
+                        },
+                        value: visTextValue.textValueShow.value
+                    }
+                }
+            },
+            groups: [],
+            revertToDefaultDescriptors: [
+                {
+                    objectName: "textValue",
+                    propertyName: "displayUnitsProperty"
+                },
+                {
+                    objectName: "textValue",
+                    propertyName: "fontFamily"
+                },
+                {
+                    objectName: "textValue",
+                    propertyName: "fontSize"
+                },
+                {
+                    objectName: "textValue",
+                    propertyName: "fontColor"
+                },
+                {
+                    objectName: "textValue",
+                    propertyName: "fontBold",
+                },
+                {
+                    objectName: "textValue",
+                    propertyName: "fontItalic"
+                },
+                {
+                    objectName: "textValue",
+                    propertyName: "fontUnderline"
+                },
+                // ... the rest of properties descriptors 
+            ]
         };
         let group1_dataFont = {
             displayName: "Font Control Group",

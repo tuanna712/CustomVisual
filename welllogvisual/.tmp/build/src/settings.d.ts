@@ -6,6 +6,7 @@ import FormattingSettingsModel = formattingSettings.Model;
  * Data Point Formatting Card
  */
 export declare class CircleSettings extends FormattingSettingsCard {
+    circleShow: formattingSettings.ToggleSwitch;
     circleColor: formattingSettings.ColorPicker;
     circleBorderColor: formattingSettings.ColorPicker;
     circleThickness: formattingSettings.NumUpDown;
@@ -14,6 +15,7 @@ export declare class CircleSettings extends FormattingSettingsCard {
     slices: FormattingSettingsSlice[];
 }
 export declare class TextValueSetting extends FormattingSettingsCard {
+    textValueShow: formattingSettings.ToggleSwitch;
     displayUnitsProperty: formattingSettings.AutoDropdown;
     fontColor: formattingSettings.ColorPicker;
     fontFamily: formattingSettings.FontPicker;
