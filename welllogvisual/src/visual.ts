@@ -52,12 +52,14 @@ export class Visual implements IVisual {
 
     constructor(options: VisualConstructorOptions) {
         this.formattingSettingsService = new FormattingSettingsService();
-        // create svg element
+        // create svg element 
         this.svg = d3.select(options.element)
             .append('svg')
             .classed('circleCard', true);
+        // create container object
         this.container = this.svg.append("g")
             .classed('container', true);
+        // 
         this.circle = this.container.append("circle")
             .classed('circle', true);
         this.textValue = this.container.append("text")

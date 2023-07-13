@@ -1,0 +1,149 @@
+{
+  "dataRoles": [
+    {
+      "displayName": "X_axis",
+      "name": "category",
+      "kind": "Grouping"
+    },
+    {
+      "displayName": "Y_axis",
+      "name": "measure",
+      "kind": "Measure"
+    }
+  ],
+  "objects": {
+    "xAxis": {
+      "properties": {
+        "show": { "type": { "bool": true } },
+        "fontSize": {
+          "type": {
+            "formatting": {
+              "fontSize": true
+            }
+          }
+        },
+        "fontFamily": {
+          "type": {
+            "formatting": {
+              "fontFamily": true
+            }
+          }
+        },
+        "fontBold": {
+          "type": {
+            "bool": true
+          }
+        },
+        "fontUnderline": {
+          "type": {
+            "bool": true
+          }
+        },
+        "fontItalic": {
+          "type": {
+            "bool": true
+          }
+        },
+        "fontColor": {
+          "type": {
+            "fill": {
+              "solid": {
+                "color": true
+              }
+            }
+          }
+        },
+        "titleText": {
+          "type": {
+            "text": true
+          }
+        }
+      }
+    },
+    "yAxis": {
+      "properties": {
+        "show": { "type": { "bool": true } },
+        "fontSize": {
+          "type": {
+            "formatting": {
+              "fontSize": true
+            }
+          }
+        },
+        "fontFamily": {
+          "type": {
+            "formatting": {
+              "fontFamily": true
+            }
+          }
+        },
+        "fontBold": {
+          "type": {
+            "bool": true
+          }
+        },
+        "fontUnderline": {
+          "type": {
+            "bool": true
+          }
+        },
+        "fontItalic": {
+          "type": {
+            "bool": true
+          }
+        },
+        "fontColor": {
+          "type": {
+            "fill": {
+              "solid": {
+                "color": true
+              }
+            }
+          }
+        },
+        "titleText": {
+          "type": {
+            "text": true
+          }
+        }
+      }
+    },
+    "line": {
+      "properties": {
+        "lineColor": {
+          "type": {
+            "fill": {
+              "solid": {
+                "color": true
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "dataViewMappings": [
+    {
+      "categorical": {
+        "categories": {
+          "for": {
+            "in": "category"
+          },
+          "dataReductionAlgorithm": {
+            "top": {}
+          }
+        },
+        "values": {
+          "select": [
+            {
+              "bind": {
+                "to": "measure"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "privileges": []
+}
