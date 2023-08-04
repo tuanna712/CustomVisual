@@ -39,6 +39,19 @@ class XAxisSetting extends FormattingSettingsCard {
     displayName: undefined,
     value: true
    })
+
+   public minValue = new formattingSettings.NumUpDown({
+    name: "minValue",
+    displayName: "Minimize",
+    value: 0
+   })
+
+   public maxValue = new formattingSettings.NumUpDown({
+    name: "maxValue",
+    displayName: "Maximize",
+    value: 0
+   })
+
    public fontSize = new formattingSettings.NumUpDown({
     name: "fontSize",
     displayName: "Font Size",
@@ -70,11 +83,17 @@ class XAxisSetting extends FormattingSettingsCard {
     displayName: "Font Color",
     value: {value: "#333"}
    })
+   public textLabelX = new formattingSettings.TextInput({
+    name: "textLabelX",
+    displayName: "X axis label",
+    placeholder: "",
+    value: "",
+   })
 
 
-    name: string = "xAxis";
-    displayName: string = "X-Axis";
-    slices: Array<FormattingSettingsSlice> = [this.xAxisShow, this.fontSize, this.fontFamily, this.fontBold, this.fontItalic, this.fontUnderline, this.fontColor];
+    public name: string = "xAxis";
+    public displayName: string = "X-Axis";
+    public slices: Array<FormattingSettingsSlice> = [this.xAxisShow, this.minValue, this.maxValue, this.fontSize, this.fontFamily, this.fontBold, this.fontItalic, this.fontUnderline, this.fontColor, this.textLabelX];
 }
 
 class YAxisSetting extends FormattingSettingsCard{
@@ -115,35 +134,101 @@ class YAxisSetting extends FormattingSettingsCard{
     value: {value: "#333"}
    })
 
+   public textLabelY = new formattingSettings.TextInput({
+    name: "textLabelY",
+    displayName: "Y axis label",
+    placeholder: "",
+    value: "",
+   })
 
-    name: string = "yAxis";
-    displayName: string = "Y-Axis";
-    slices: Array<FormattingSettingsSlice> = [this.yAxisShow, this.fontSize, this.fontFamily, this.fontBold, this.fontItalic, this.fontUnderline, this.fontColor];
+   public reverse = new formattingSettings.ToggleSwitch({
+    name: "reverseY",
+    displayName: "reverseY",
+    value: false
+   })
+
+
+    public name: string = "yAxis";
+    public displayName: string = "Y-Axis";
+    public slices: Array<FormattingSettingsSlice> = [this.yAxisShow, this.fontSize, this.fontFamily, this.fontBold, this.fontItalic, this.fontUnderline, this.fontColor, this.textLabelY, this.reverse];
 }
 
 class LineSettings extends FormattingSettingsCard{
+    public LineShow = new formattingSettings.ToggleSwitch({
+        name: "show",
+        displayName: undefined,
+        value: true
+    })
+
     public lineColor = new formattingSettings.ColorPicker({
         name: "lineColor",
         displayName: "Line Color",
         value: {value: "#000000"}
     })
+    public lineThickness = new formattingSettings.NumUpDown({
+        name: "lineThickness", 
+        displayName: "Line Thickness",
+        value: 1
+    })
 
-    name: string = "line"
-    displayName?: string = "Line"
-    slices: Array<FormattingSettingsSlice> = [this.lineColor]
+    public lineDash = new formattingSettings.NumUpDown({
+        name: "lineDash", 
+        displayName: "Line Dash",
+        value: 0
+    })
+
+
+    public name: string = "line"
+    public displayName?: string = "Line"
+    public slices: FormattingSettingsSlice[] = [this.lineColor, this.lineThickness, this.lineDash]
 
 }
 
+class MarkerSetting extends FormattingSettingsCard {
+    public markerShow = new formattingSettings.ToggleSwitch({
+        name: "show",
+        displayName: undefined,
+        value: true
+    })
 
+    public markerColor = new formattingSettings.ColorPicker({
+        name: "markerColor",
+        displayName: "Marker Color",
+        value: {value: "red"}
+    })
+    public markerThickness = new formattingSettings.NumUpDown({
+        name: "markerThickness", 
+        displayName: "Marker Thickness",
+        value: 1
+    })
+
+    public markerDash = new formattingSettings.NumUpDown({
+        name: "markerDash", 
+        displayName: "Marker Dash",
+        value: 0
+    })
+
+    public markerValue = new formattingSettings.NumUpDown({
+        name: "markerValue", 
+        displayName: "Marker Value",
+        value: 0
+    })
+    public name: string = "marker"
+    public displayName?: string = "Marker"
+    public slices: FormattingSettingsSlice[] = [this.markerShow, this.markerColor, this.markerThickness, this.markerDash, this.markerValue]
+
+    
+}
 /**
 * visual settings model class
 *
 */
 export class VisualFormattingSettingsModel extends FormattingSettingsModel {
     // Create formatting settings model formatting cards
-    xAxis = new XAxisSetting()
-    yAxis = new YAxisSetting()
-    line = new LineSettings()
+    public xAxis:XAxisSetting = new XAxisSetting()
+    public yAxis:YAxisSetting = new YAxisSetting()
+    public line:LineSettings = new LineSettings()
+    public marker: MarkerSetting = new MarkerSetting()
 
-    cards = [this.xAxis, this.yAxis, this.line];
+    public cards:FormattingSettingsCard[] = [this.xAxis, this.yAxis, this.line, this.marker];
 }

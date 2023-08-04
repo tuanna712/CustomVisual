@@ -47,6 +47,16 @@ class XAxisSetting extends FormattingSettingsCard {
             displayName: undefined,
             value: true
         });
+        this.minValue = new powerbi_visuals_utils_formattingmodel__WEBPACK_IMPORTED_MODULE_0__/* .NumUpDown */ .L_({
+            name: "minValue",
+            displayName: "Minimize",
+            value: 0
+        });
+        this.maxValue = new powerbi_visuals_utils_formattingmodel__WEBPACK_IMPORTED_MODULE_0__/* .NumUpDown */ .L_({
+            name: "maxValue",
+            displayName: "Maximize",
+            value: 0
+        });
         this.fontSize = new powerbi_visuals_utils_formattingmodel__WEBPACK_IMPORTED_MODULE_0__/* .NumUpDown */ .L_({
             name: "fontSize",
             displayName: "Font Size",
@@ -77,9 +87,15 @@ class XAxisSetting extends FormattingSettingsCard {
             displayName: "Font Color",
             value: { value: "#333" }
         });
+        this.textLabelX = new powerbi_visuals_utils_formattingmodel__WEBPACK_IMPORTED_MODULE_0__/* .TextInput */ .oi({
+            name: "textLabelX",
+            displayName: "X axis label",
+            placeholder: "",
+            value: "",
+        });
         this.name = "xAxis";
         this.displayName = "X-Axis";
-        this.slices = [this.xAxisShow, this.fontSize, this.fontFamily, this.fontBold, this.fontItalic, this.fontUnderline, this.fontColor];
+        this.slices = [this.xAxisShow, this.minValue, this.maxValue, this.fontSize, this.fontFamily, this.fontBold, this.fontItalic, this.fontUnderline, this.fontColor, this.textLabelX];
     }
 }
 class YAxisSetting extends FormattingSettingsCard {
@@ -120,22 +136,81 @@ class YAxisSetting extends FormattingSettingsCard {
             displayName: "Font Color",
             value: { value: "#333" }
         });
+        this.textLabelY = new powerbi_visuals_utils_formattingmodel__WEBPACK_IMPORTED_MODULE_0__/* .TextInput */ .oi({
+            name: "textLabelY",
+            displayName: "Y axis label",
+            placeholder: "",
+            value: "",
+        });
+        this.reverse = new powerbi_visuals_utils_formattingmodel__WEBPACK_IMPORTED_MODULE_0__/* .ToggleSwitch */ .Zh({
+            name: "reverseY",
+            displayName: "reverseY",
+            value: false
+        });
         this.name = "yAxis";
         this.displayName = "Y-Axis";
-        this.slices = [this.yAxisShow, this.fontSize, this.fontFamily, this.fontBold, this.fontItalic, this.fontUnderline, this.fontColor];
+        this.slices = [this.yAxisShow, this.fontSize, this.fontFamily, this.fontBold, this.fontItalic, this.fontUnderline, this.fontColor, this.textLabelY, this.reverse];
     }
 }
 class LineSettings extends FormattingSettingsCard {
     constructor() {
         super(...arguments);
+        this.LineShow = new powerbi_visuals_utils_formattingmodel__WEBPACK_IMPORTED_MODULE_0__/* .ToggleSwitch */ .Zh({
+            name: "show",
+            displayName: undefined,
+            value: true
+        });
         this.lineColor = new powerbi_visuals_utils_formattingmodel__WEBPACK_IMPORTED_MODULE_0__/* .ColorPicker */ .zH({
             name: "lineColor",
             displayName: "Line Color",
             value: { value: "#000000" }
         });
+        this.lineThickness = new powerbi_visuals_utils_formattingmodel__WEBPACK_IMPORTED_MODULE_0__/* .NumUpDown */ .L_({
+            name: "lineThickness",
+            displayName: "Line Thickness",
+            value: 1
+        });
+        this.lineDash = new powerbi_visuals_utils_formattingmodel__WEBPACK_IMPORTED_MODULE_0__/* .NumUpDown */ .L_({
+            name: "lineDash",
+            displayName: "Line Dash",
+            value: 0
+        });
         this.name = "line";
         this.displayName = "Line";
-        this.slices = [this.lineColor];
+        this.slices = [this.lineColor, this.lineThickness, this.lineDash];
+    }
+}
+class MarkerSetting extends FormattingSettingsCard {
+    constructor() {
+        super(...arguments);
+        this.markerShow = new powerbi_visuals_utils_formattingmodel__WEBPACK_IMPORTED_MODULE_0__/* .ToggleSwitch */ .Zh({
+            name: "show",
+            displayName: undefined,
+            value: true
+        });
+        this.markerColor = new powerbi_visuals_utils_formattingmodel__WEBPACK_IMPORTED_MODULE_0__/* .ColorPicker */ .zH({
+            name: "markerColor",
+            displayName: "Marker Color",
+            value: { value: "red" }
+        });
+        this.markerThickness = new powerbi_visuals_utils_formattingmodel__WEBPACK_IMPORTED_MODULE_0__/* .NumUpDown */ .L_({
+            name: "markerThickness",
+            displayName: "Marker Thickness",
+            value: 1
+        });
+        this.markerDash = new powerbi_visuals_utils_formattingmodel__WEBPACK_IMPORTED_MODULE_0__/* .NumUpDown */ .L_({
+            name: "markerDash",
+            displayName: "Marker Dash",
+            value: 0
+        });
+        this.markerValue = new powerbi_visuals_utils_formattingmodel__WEBPACK_IMPORTED_MODULE_0__/* .NumUpDown */ .L_({
+            name: "markerValue",
+            displayName: "Marker Value",
+            value: 0
+        });
+        this.name = "marker";
+        this.displayName = "Marker";
+        this.slices = [this.markerShow, this.markerColor, this.markerThickness, this.markerDash, this.markerValue];
     }
 }
 /**
@@ -149,7 +224,8 @@ class VisualFormattingSettingsModel extends FormattingSettingsModel {
         this.xAxis = new XAxisSetting();
         this.yAxis = new YAxisSetting();
         this.line = new LineSettings();
-        this.cards = [this.xAxis, this.yAxis, this.line];
+        this.marker = new MarkerSetting();
+        this.cards = [this.xAxis, this.yAxis, this.line, this.marker];
     }
 }
 
@@ -162,9 +238,11 @@ class VisualFormattingSettingsModel extends FormattingSettingsModel {
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   u: () => (/* binding */ Visual)
 /* harmony export */ });
-/* harmony import */ var powerbi_visuals_utils_formattingmodel__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(4261);
-/* harmony import */ var d3__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(662);
-/* harmony import */ var _settings__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7544);
+/* harmony import */ var powerbi_visuals_api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3350);
+/* harmony import */ var powerbi_visuals_api__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(powerbi_visuals_api__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var powerbi_visuals_utils_formattingmodel__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(4261);
+/* harmony import */ var d3__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(662);
+/* harmony import */ var _settings__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(7544);
 /*
 *  Power BI Visual CLI
 *
@@ -195,93 +273,586 @@ class VisualFormattingSettingsModel extends FormattingSettingsModel {
 
 
 
+
 class Visual {
+    // private  dataArray2 : Well[]= []
     constructor(options) {
-        this.formattingSettingsService = new powerbi_visuals_utils_formattingmodel__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .Z();
-        this.svg = d3__WEBPACK_IMPORTED_MODULE_0__/* .select */ .Ys(options.element).append('svg').classed("LineChart", true);
-        this.container = this.svg.append("g").classed("container", true);
-        this.line = this.container.append("line").classed("line", true);
-        this.xAxis = this.container.append("text").classed("textLabel", true);
-        // scale
-        // var xScale = d3.scaleLinear().domain([0, 5]).range([500, 0])
-        // var yScale = d3.scaleLinear().domain([0, 10]).range([500, 0])
-        // // axes
-        // var x_axis = d3.axisBottom(xScale)
-        // var y_axis = d3.axisLeft(yScale)
-        // // call axis
-        // this.svg.append("g")
-        // .attr("transform", `translate(20, 500)`)
-        // .call(x_axis)
-        // this.svg.append("g")
-        // .attr("transform", "translate(20, 5)")
-        // .call(y_axis)
+        // Specify the chart’s dimensions.
+        this.width = 500;
+        this.height = 250;
+        this.marginTop = 20;
+        this.marginRight = 30;
+        this.marginBottom = 30;
+        this.marginLeft = 40;
+        this.host = options.host;
+        // this.selectionManager = this.host
+        this.formattingSettingsService = new powerbi_visuals_utils_formattingmodel__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .Z();
+        this.svg = d3__WEBPACK_IMPORTED_MODULE_1__/* .select */ .Ys(options.element).append('svg').classed("LineChart", true).attr("viewBox", [0, 0, this.width, this.height])
+            .attr("style", "max-width: 100%; height: auto; height: intrinsic;")
+            .style("-webkit-tap-highlight-color", "transparent");
+        this.line = this.svg
+            .append("path")
+            .classed("lineVertical", true);
+        this.line2 = this.svg
+            .append("path")
+            .classed("lineVertical", true);
+        this.xAxis = this.svg
+            .append('g')
+            .classed('xAxis', true);
+        this.yAxis = this.svg
+            .append('g')
+            .classed('yAxis', true);
+        this.textXLabel = this.svg.append("text");
+        this.textYLabel = this.svg.append("text");
+        this.marker = this.svg.append("line").classed("marker", true).attr("stroke-width", 0);
+        this.tooltip = this.svg.append("g");
+        this.point = this.svg.append("circle").style("fill", "blue").classed("point", true);
+        //  cạnh đáy
+        this.svg
+            .append("line")
+            .attr("x1", this.marginLeft)
+            .attr("y1", this.height - this.marginBottom)
+            .attr("x2", this.width - this.marginRight)
+            .attr("y2", this.height - this.marginBottom)
+            .attr("stroke", "black");
+        // cạnh bên
+        this.svg
+            .append("line")
+            .attr("x1", this.width - this.marginRight)
+            .attr("y1", this.height - this.marginBottom)
+            .attr("x2", this.width - this.marginRight)
+            .attr("y2", this.marginTop)
+            .attr("stroke", "black");
     }
     update(options) {
         let dataView = options.dataViews[0];
+        let categoricalDataView = dataView.categorical;
+        let categories = categoricalDataView.categories[0];
+        let categoriesValue = categories.values;
+        let mesures = categoricalDataView.values[0];
+        let mesuresValue = mesures.values;
+        let mesuresHighlight = mesures.highlights;
+        this.visualSetting = this.formattingSettingsService.populateFormattingSettingsModel(_settings__WEBPACK_IMPORTED_MODULE_2__/* .VisualFormattingSettingsModel */ .E, options.dataViews);
+        this.visualSetting.line.lineThickness.value = Math.max(0, this.visualSetting.line.lineThickness.value);
+        this.visualSetting.line.lineThickness.value = Math.min(20, this.visualSetting.line.lineThickness.value);
         let view_width = options.viewport.width; // width of figure
         let view_height = options.viewport.height; // height of figure
         // assign width, height to svg (figure)
         this.svg.attr("width", view_width);
         this.svg.attr("height", view_height);
-        var data = dataView.categorical.values[0].values.slice(0, 5);
-        const margin = { top: 50, right: 50, bottom: 50, left: 50 };
-        const width = 400 - margin.left - margin.right;
-        const height = 500 - margin.top - margin.bottom;
-        const x = d3__WEBPACK_IMPORTED_MODULE_0__/* .scaleBand */ .tiA()
-            .range([0, width])
-            .padding(0.1);
-        const y = d3__WEBPACK_IMPORTED_MODULE_0__/* .scaleLinear */ .BYU()
-            .range([height, 0]);
-        const chart = this.svg.append("g")
-            .attr("transform", `translate(${margin.left},${margin.top})`);
-        x.domain(dataView.categorical.categories[0].values.slice(0, 5));
-        y.domain([0, d3__WEBPACK_IMPORTED_MODULE_0__/* .max */ .Fp7(data)]);
-        chart.selectAll(".bar")
-            .data(data)
-            .enter().append("rect")
-            .attr("class", "bar")
-            .attr("x", (d, i) => x(i.toString()))
-            .attr("y", (d) => y(d))
-            .attr("width", x.bandwidth())
-            .attr("height", (d) => height - y(d));
-        chart.append("g")
-            .attr("transform", `translate(0,${height})`)
-            .call(d3__WEBPACK_IMPORTED_MODULE_0__/* .axisBottom */ .LLu(x));
-        chart.append("g")
-            .call(d3__WEBPACK_IMPORTED_MODULE_0__/* .axisLeft */ .y4O(y));
-        this.visualSetting = this.formattingSettingsService.populateFormattingSettingsModel(_settings__WEBPACK_IMPORTED_MODULE_1__/* .VisualFormattingSettingsModel */ .E, options.dataViews);
-        // this.line
-        //     .attr("x1", "0")
-        //     .attr("y1", "0")
-        //     .attr("x2", width / 3)
-        //     .attr("y2", height / 3)
-        //     .attr("stroke", this.visualSetting.line.lineColor.value.value)
-        // var bold:string = "normal"
-        // var italic:string = "normal"
-        // var underline:string = "none"
-        // if (this.visualSetting.xAxis.fontBold.value == true){
-        //     bold = "bold"
-        // }
-        // if (this.visualSetting.xAxis.fontItalic.value == true){
-        //     italic = "italic"
-        // }
-        // if (this.visualSetting.xAxis.fontUnderline.value == true){
-        //     underline = "underline"
-        // }
-        // this.xAxis
-        // .attr("font-family", this.visualSetting.xAxis.fontFamily.value)
-        // .style("font-size", this.visualSetting.xAxis.fontSize.value.toString() + "px")
-        // .style("fill", this.visualSetting.xAxis.fontColor.value.value)
-        // .style("font-weight", bold)
-        // .style("font-style", italic)
-        // .style("text-decoration", underline)
+        let list_depth = dataView.categorical.categories[0].values;
+        let list_gr = dataView.categorical.values[0].values;
+        // let list_other = <Array<number>>dataView.categorical.values[1].values
+        var dataArray2 = [];
+        for (var i = 0; i < list_depth.length; i++) {
+            dataArray2.push({
+                depth: list_depth[i],
+                gr: list_gr[i],
+                // other: list_other[i]
+            });
+        }
+        // sort
+        dataArray2.sort((a, b) => a.depth - b.depth);
+        // split dataArray2 to 2 array
+        const gr_array = dataArray2.map((d) => d.gr);
+        const other_array = dataArray2.map((d) => d.other);
+        const depth_array = dataArray2.map((d) => d.depth);
+        var minValue, maxValue;
+        if (this.visualSetting.xAxis.maxValue.value <= 0 && this.visualSetting.xAxis.minValue.value <= 0) {
+            minValue = d3__WEBPACK_IMPORTED_MODULE_1__/* .min */ .VV$(gr_array);
+            maxValue = d3__WEBPACK_IMPORTED_MODULE_1__/* .max */ .Fp7(gr_array);
+        }
+        else {
+            minValue = this.visualSetting.xAxis.minValue.value,
+                maxValue = this.visualSetting.xAxis.maxValue.value;
+        }
+        const x = d3__WEBPACK_IMPORTED_MODULE_1__/* .scaleLinear */ .BYU()
+            .domain([minValue, maxValue])
+            .range([this.marginLeft, this.width - this.marginRight]);
+        const y = d3__WEBPACK_IMPORTED_MODULE_1__/* .scaleLinear */ .BYU()
+            .range([this.marginTop, this.height - this.marginBottom]);
+        // revert y axis
+        const reverse = this.visualSetting.yAxis.reverse.value;
+        // this.svg.selectAll(".yAxis").remove()
+        if (reverse === true) {
+            y.domain([d3__WEBPACK_IMPORTED_MODULE_1__/* .max */ .Fp7(depth_array), d3__WEBPACK_IMPORTED_MODULE_1__/* .min */ .VV$(depth_array)]);
+        }
+        else {
+            y.domain([d3__WEBPACK_IMPORTED_MODULE_1__/* .min */ .VV$(depth_array), d3__WEBPACK_IMPORTED_MODULE_1__/* .max */ .Fp7(depth_array)]);
+        }
+        // caculate value of marker on y axis
+        const domain_distance = d3__WEBPACK_IMPORTED_MODULE_1__/* .max */ .Fp7(depth_array) - d3__WEBPACK_IMPORTED_MODULE_1__/* .min */ .VV$(depth_array);
+        // Add the horizontal axis.
+        this.xAxis
+            .call(d3__WEBPACK_IMPORTED_MODULE_1__/* .axisTop */ .F5q(x)
+            .ticks(this.width / 80)
+            .tickSizeOuter(0))
+            //   Grid vertical
+            .call((g) => g
+            .selectAll(".tick line")
+            // .clone()
+            .attr("y2", this.height - this.marginTop - this.marginBottom)
+            .attr("stroke-opacity", 0.1));
+        // .call((g) => g.select(".domain").remove()) // nếu muốn bỏ thanh dọc các trị thì bỏ comment
+        //  add text label x axis
+        this.textXLabel
+            .attr("x", this.width / 2)
+            .attr("y", -this.marginTop)
+            .style("text-anchor", "middle")
+            .text(this.visualSetting.xAxis.textLabelX.value);
+        // Add the vertical axis, a grid and an axis label.
+        this.yAxis
+            .classed("yAxis", true)
+            .attr("transform", `translate(${this.marginLeft},0)`)
+            .call(d3__WEBPACK_IMPORTED_MODULE_1__/* .axisLeft */ .y4O(y))
+            //   .call((g) => g.select(".domain").remove())
+            // grid horizontal
+            .call((g) => g
+            .selectAll(".tick line")
+            // .clone()
+            .attr("x2", this.width - this.marginLeft - this.marginRight)
+            .attr("stroke-opacity", 0.1));
+        this.textYLabel
+            .attr("transform", "rotate(-90)")
+            .attr("x", -100)
+            .attr("y", 5)
+            .style("text-anchor", "middle")
+            .text(this.visualSetting.yAxis.textLabelY.value);
+        // vertical line chart
+        const line = d3__WEBPACK_IMPORTED_MODULE_1__/* .line */ .jvg()
+            .x((d) => x(d.gr))
+            .y((d) => y(d.depth));
+        const line2 = d3__WEBPACK_IMPORTED_MODULE_1__/* .line */ .jvg()
+            .x((d) => x(d.other))
+            .y((d) => y(d.depth));
+        this.line
+            .datum(dataArray2)
+            .attr("fill", "none")
+            .attr("stroke", this.visualSetting.line.lineColor.value.value)
+            .attr("stroke-width", this.visualSetting.line.lineThickness.value)
+            .attr("stroke-dasharray", this.visualSetting.line.lineDash.value)
+            .attr("d", line);
+        // .on("mousemove", () => {
+        //     this.line.attr("stroke", "red")
+        // })
+        // .on("mouseout", () => {
+        //     this.line.attr("stroke", "blue")
+        // })
+        // .on("click", () => {
+        //     this.line.attr("stroke", "yellow")
+        // })
+        if (dataArray2.length == 1) {
+            this.point
+                .attr("cx", 100)
+                .attr("cy", 100)
+                .attr("r", 1);
+        }
+        // d3.selectAll(".point").remove()
+        // second line
+        // this.line2
+        // .datum(dataArray2)
+        // .attr("fill", "none")
+        // .attr("stroke", "blue")
+        // .attr("stroke-width", this.visualSetting.line.lineThickness.value)
+        // .attr("stroke-dasharray", this.visualSetting.line.lineDash.value)
+        // .attr("d", line2)
+        // marker
+        const value = this.visualSetting.marker.markerValue.value;
+        this.marker
+            .attr("stroke", this.visualSetting.marker.markerColor.value.value)
+            .attr("stroke-width", this.visualSetting.marker.markerThickness.value)
+            .attr("x1", this.marginLeft)
+            .attr("x2", this.width - this.marginRight)
+            .attr("stroke-dasharray", this.visualSetting.marker.markerDash.value);
+        var y_marker_value;
+        if (reverse === true) {
+            y_marker_value = this.marginTop + ((d3__WEBPACK_IMPORTED_MODULE_1__/* .max */ .Fp7(depth_array) - value) / domain_distance) * (this.height - this.marginBottom - this.marginTop);
+        }
+        else {
+            y_marker_value = this.marginTop + ((value - d3__WEBPACK_IMPORTED_MODULE_1__/* .min */ .VV$(depth_array)) / domain_distance) * (this.height - this.marginBottom - this.marginTop);
+        }
+        this.marker
+            .attr("y1", y_marker_value)
+            .attr("y2", y_marker_value);
+        const makerShow = this.visualSetting.marker.markerShow.value;
+        if (!makerShow)
+            this.marker.attr("stroke-width", 0);
+        // tooltips
+        const path = this.tooltip.selectAll("path")
+            .data([,])
+            .join("path")
+            .attr("fill", "white")
+            .attr("stroke", "black");
     }
     /**
      * Returns properties pane formatting model content hierarchies, properties and latest formatting values, Then populate properties pane.
      * This method is called once every time we open properties pane or when the user edit any format property.
      */
     getFormattingModel() {
-        return this.formattingSettingsService.buildFormattingModel(this.visualSetting);
+        var yAxisSetting = this.visualSetting.yAxis;
+        var xAxisSetting = this.visualSetting.xAxis;
+        var lineSetting = this.visualSetting.line;
+        let line = {
+            description: "Line Description",
+            displayName: "Line",
+            uid: "Line_uid",
+            topLevelToggle: {
+                uid: "line_topLevelToggle_showToggleSwitch_uid",
+                suppressDisplayName: true,
+                control: {
+                    type: "ToggleSwitch" /* powerbi.visuals.FormattingComponent.ToggleSwitch */,
+                    properties: {
+                        descriptor: {
+                            objectName: "line",
+                            propertyName: "show"
+                        },
+                        value: lineSetting.LineShow.value
+                    }
+                }
+            },
+            groups: [
+                {
+                    displayName: "Line",
+                    uid: "line_uid",
+                    slices: [
+                        {
+                            uid: "lineColor_uid",
+                            displayName: "Line Color",
+                            control: {
+                                type: "ColorPicker" /* powerbi.visuals.FormattingComponent.ColorPicker */,
+                                properties: {
+                                    descriptor: {
+                                        objectName: "line",
+                                        propertyName: "lineColor"
+                                    },
+                                    value: { value: lineSetting.lineColor.value.value }
+                                }
+                            }
+                        },
+                        {
+                            uid: "line_Thickness_uid",
+                            displayName: "Line Thickness",
+                            control: {
+                                type: "NumUpDown" /* powerbi.visuals.FormattingComponent.NumUpDown */,
+                                properties: {
+                                    descriptor: {
+                                        objectName: "line",
+                                        propertyName: "lineThickness"
+                                    },
+                                    value: lineSetting.lineThickness.value
+                                }
+                            }
+                        },
+                        {
+                            uid: "line_Dash_uid",
+                            displayName: "Line Dash",
+                            control: {
+                                type: "NumUpDown" /* powerbi.visuals.FormattingComponent.NumUpDown */,
+                                properties: {
+                                    descriptor: {
+                                        objectName: "line",
+                                        propertyName: "lineDash"
+                                    },
+                                    value: lineSetting.lineDash.value
+                                }
+                            }
+                        }
+                    ]
+                }
+            ],
+            revertToDefaultDescriptors: [
+                {
+                    objectName: "line",
+                    propertyName: "lineColor"
+                },
+                {
+                    objectName: "line",
+                    propertyName: "lineThickness"
+                },
+                {
+                    objectName: "line",
+                    propertyName: "lineThickness"
+                },
+            ]
+        };
+        let marker = {
+            description: "Marker Description",
+            displayName: "Marker",
+            uid: "Marker_uid",
+            topLevelToggle: {
+                uid: "Marker_topLevelToggle_showToggleSwitch_uid",
+                suppressDisplayName: true,
+                control: {
+                    type: "ToggleSwitch" /* powerbi.visuals.FormattingComponent.ToggleSwitch */,
+                    properties: {
+                        descriptor: {
+                            objectName: "marker",
+                            propertyName: "show"
+                        },
+                        value: this.visualSetting.marker.markerShow.value
+                    }
+                }
+            },
+            groups: [
+                {
+                    displayName: "Marker",
+                    uid: "Marker_uid",
+                    slices: [
+                        {
+                            uid: "MarkerColor_uid",
+                            displayName: "Marker Color",
+                            control: {
+                                type: "ColorPicker" /* powerbi.visuals.FormattingComponent.ColorPicker */,
+                                properties: {
+                                    descriptor: {
+                                        objectName: "marker",
+                                        propertyName: "markerColor"
+                                    },
+                                    value: { value: this.visualSetting.marker.markerColor.value.value }
+                                }
+                            }
+                        },
+                        {
+                            uid: "Marker_Thickness_uid",
+                            displayName: "Marker Thickness",
+                            control: {
+                                type: "NumUpDown" /* powerbi.visuals.FormattingComponent.NumUpDown */,
+                                properties: {
+                                    descriptor: {
+                                        objectName: "marker",
+                                        propertyName: "markerThickness"
+                                    },
+                                    value: this.visualSetting.marker.markerThickness.value
+                                }
+                            }
+                        },
+                        {
+                            uid: "marker_Dash_uid",
+                            displayName: "marker Dash",
+                            control: {
+                                type: "NumUpDown" /* powerbi.visuals.FormattingComponent.NumUpDown */,
+                                properties: {
+                                    descriptor: {
+                                        objectName: "marker",
+                                        propertyName: "markerDash"
+                                    },
+                                    value: this.visualSetting.marker.markerDash.value
+                                }
+                            }
+                        },
+                        {
+                            uid: "marker_Value_uid",
+                            displayName: "Marker Value",
+                            control: {
+                                type: "NumUpDown" /* powerbi.visuals.FormattingComponent.NumUpDown */,
+                                properties: {
+                                    descriptor: {
+                                        objectName: "marker",
+                                        propertyName: "markerValue"
+                                    },
+                                    value: this.visualSetting.marker.markerValue.value
+                                }
+                            }
+                        }
+                    ]
+                }
+            ],
+            revertToDefaultDescriptors: [
+                {
+                    objectName: "marker",
+                    propertyName: "markerColor"
+                },
+                {
+                    objectName: "marker",
+                    propertyName: "markerThickness"
+                },
+                {
+                    objectName: "marker",
+                    propertyName: "markerDash"
+                },
+                {
+                    objectName: "marker",
+                    propertyName: "markerValue"
+                },
+            ]
+        };
+        let xAxis = {
+            description: "X axis Description",
+            displayName: "X axis",
+            uid: "x_axis_uid",
+            groups: [
+                {
+                    displayName: "Range",
+                    uid: "range_group_uid",
+                    slices: [
+                        {
+                            uid: "minimize_slice_uid",
+                            displayName: "Minimize",
+                            control: {
+                                type: "NumUpDown" /* powerbi.visuals.FormattingComponent.NumUpDown */,
+                                properties: {
+                                    descriptor: {
+                                        objectName: "xAxis",
+                                        propertyName: "minValue"
+                                    },
+                                    value: xAxisSetting.minValue.value
+                                }
+                            }
+                        },
+                        {
+                            uid: "maximize_slice_uid",
+                            displayName: "Maximize",
+                            control: {
+                                type: "NumUpDown" /* powerbi.visuals.FormattingComponent.NumUpDown */,
+                                properties: {
+                                    descriptor: {
+                                        objectName: "xAxis",
+                                        propertyName: "maxValue"
+                                    },
+                                    value: xAxisSetting.maxValue.value
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    displayName: "Title",
+                    uid: "xAxis_title_group_uid",
+                    slices: [
+                        {
+                            displayName: "Title X label",
+                            uid: "title_x_label_slice_uid",
+                            control: {
+                                type: "TextInput" /* powerbi.visuals.FormattingComponent.TextInput */,
+                                properties: {
+                                    placeholder: "Auto",
+                                    descriptor: {
+                                        objectName: "xAxis",
+                                        propertyName: "textLabelX"
+                                    },
+                                    value: xAxisSetting.textLabelX.value
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        };
+        let yAxis = {
+            description: "Y axis Description",
+            displayName: "Y axis",
+            uid: "y_axis_uid",
+            topLevelToggle: {
+                uid: "y_axis_topLevelToggle_showToggleSwitch_uid",
+                suppressDisplayName: true,
+                control: {
+                    type: "ToggleSwitch" /* powerbi.visuals.FormattingComponent.ToggleSwitch */,
+                    properties: {
+                        descriptor: {
+                            objectName: "yAxis",
+                            propertyName: "show"
+                        },
+                        value: yAxisSetting.yAxisShow.value
+                    }
+                }
+            },
+            groups: [
+                {
+                    displayName: "Font Control Group",
+                    uid: "font_control_group_uid",
+                    slices: [
+                        {
+                            uid: "data_font_control_slice_uid",
+                            displayName: "Font",
+                            control: {
+                                type: "FontControl" /* powerbi.visuals.FormattingComponent.FontControl */,
+                                properties: {
+                                    fontFamily: {
+                                        descriptor: {
+                                            objectName: "textValue",
+                                            propertyName: "fontFamily"
+                                        },
+                                        value: yAxisSetting.fontFamily.value
+                                    },
+                                    fontSize: {
+                                        descriptor: {
+                                            objectName: "textValue",
+                                            propertyName: "fontSize"
+                                        },
+                                        value: yAxisSetting.fontSize.value
+                                    },
+                                    bold: {
+                                        descriptor: {
+                                            objectName: "textValue",
+                                            propertyName: "fontBold"
+                                        },
+                                        value: yAxisSetting.fontBold.value
+                                    },
+                                    italic: {
+                                        descriptor: {
+                                            objectName: "textValue",
+                                            propertyName: "fontItalic"
+                                        },
+                                        value: yAxisSetting.fontItalic.value
+                                    },
+                                    underline: {
+                                        descriptor: {
+                                            objectName: "textValue",
+                                            propertyName: "fontUnderline"
+                                        },
+                                        value: yAxisSetting.fontUnderline.value
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    displayName: "Reverse Y axis",
+                    uid: "reverse_y_axis_uid",
+                    slices: [
+                        {
+                            uid: "reverse_y_axis_slice_uid",
+                            displayName: "Reverse Y axis",
+                            control: {
+                                type: "ToggleSwitch" /* powerbi.visuals.FormattingComponent.ToggleSwitch */,
+                                properties: {
+                                    descriptor: {
+                                        objectName: "yAxis",
+                                        propertyName: "reverseY"
+                                    },
+                                    value: yAxisSetting.reverse.value
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    displayName: "Title",
+                    uid: "yAxis_title_group_uid",
+                    slices: [
+                        {
+                            displayName: "Title Y label",
+                            uid: "title_y_label_slice_uid",
+                            control: {
+                                type: "TextInput" /* powerbi.visuals.FormattingComponent.TextInput */,
+                                properties: {
+                                    placeholder: "Auto",
+                                    descriptor: {
+                                        objectName: "yAxis",
+                                        propertyName: "textLabelY"
+                                    },
+                                    value: yAxisSetting.textLabelY.value
+                                }
+                            }
+                        }
+                    ]
+                }
+            ],
+        };
+        const formattingModel = { cards: [line, xAxis, yAxis, marker] };
+        return formattingModel;
+        // return this.formattingSettingsService.buildFormattingModel(this.visualSetting);
     }
 }
 
@@ -468,16 +1039,16 @@ function ascendingComparator(f) {
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   Fp: () => (/* reexport safe */ _max__WEBPACK_IMPORTED_MODULE_3__.Z),
 /* harmony export */   G9: () => (/* reexport safe */ _ticks__WEBPACK_IMPORTED_MODULE_5__.G9),
+/* harmony export */   VV: () => (/* reexport safe */ _min__WEBPACK_IMPORTED_MODULE_4__.Z),
 /* harmony export */   b4: () => (/* reexport safe */ _bisect__WEBPACK_IMPORTED_MODULE_0__.ZP),
 /* harmony export */   ly: () => (/* reexport safe */ _ticks__WEBPACK_IMPORTED_MODULE_5__.ly),
-/* harmony export */   sd: () => (/* reexport safe */ _ticks__WEBPACK_IMPORTED_MODULE_5__.ZP),
-/* harmony export */   w6: () => (/* reexport safe */ _range__WEBPACK_IMPORTED_MODULE_4__.Z)
+/* harmony export */   sd: () => (/* reexport safe */ _ticks__WEBPACK_IMPORTED_MODULE_5__.ZP)
 /* harmony export */ });
 /* harmony import */ var _bisect__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4355);
 /* harmony import */ var _histogram__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(902);
 /* harmony import */ var _threshold_freedmanDiaconis__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(4081);
-/* harmony import */ var _max__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(823);
-/* harmony import */ var _range__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(893);
+/* harmony import */ var _max__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(8823);
+/* harmony import */ var _min__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(7622);
 /* harmony import */ var _ticks__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(7614);
 
 
@@ -510,7 +1081,7 @@ function ascendingComparator(f) {
 
 /***/ }),
 
-/***/ 823:
+/***/ 8823:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
@@ -554,24 +1125,45 @@ function ascendingComparator(f) {
 
 /***/ }),
 
-/***/ 893:
+/***/ 7622:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   Z: () => (/* export default binding */ __WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony default export */ function __WEBPACK_DEFAULT_EXPORT__(start, stop, step) {
-  start = +start, stop = +stop, step = (n = arguments.length) < 2 ? (stop = start, start = 0, 1) : n < 3 ? 1 : +step;
+/* harmony default export */ function __WEBPACK_DEFAULT_EXPORT__(values, valueof) {
+  var n = values.length,
+      i = -1,
+      value,
+      min;
 
-  var i = -1,
-      n = Math.max(0, Math.ceil((stop - start) / step)) | 0,
-      range = new Array(n);
-
-  while (++i < n) {
-    range[i] = start + i * step;
+  if (valueof == null) {
+    while (++i < n) { // Find the first comparable value.
+      if ((value = values[i]) != null && value >= value) {
+        min = value;
+        while (++i < n) { // Compare the remaining values.
+          if ((value = values[i]) != null && min > value) {
+            min = value;
+          }
+        }
+      }
+    }
   }
 
-  return range;
+  else {
+    while (++i < n) { // Find the first comparable value.
+      if ((value = valueof(values[i], i, values)) != null && value >= value) {
+        min = value;
+        while (++i < n) { // Compare the remaining values.
+          if ((value = valueof(values[i], i, values)) != null && min > value) {
+            min = value;
+          }
+        }
+      }
+    }
+  }
+
+  return min;
 }
 
 
@@ -672,10 +1264,10 @@ var slice = Array.prototype.slice;
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   LL: () => (/* binding */ axisBottom),
+/* harmony export */   F5: () => (/* binding */ axisTop),
 /* harmony export */   y4: () => (/* binding */ axisLeft)
 /* harmony export */ });
-/* unused harmony exports axisTop, axisRight */
+/* unused harmony exports axisRight, axisBottom */
 /* harmony import */ var _array__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4844);
 /* harmony import */ var _identity__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(9985);
 
@@ -873,7 +1465,7 @@ function axisLeft(scale) {
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   LL: () => (/* reexport safe */ _axis__WEBPACK_IMPORTED_MODULE_0__.LL),
+/* harmony export */   F5: () => (/* reexport safe */ _axis__WEBPACK_IMPORTED_MODULE_0__.F5),
 /* harmony export */   y4: () => (/* reexport safe */ _axis__WEBPACK_IMPORTED_MODULE_0__.y4)
 /* harmony export */ });
 /* harmony import */ var _axis__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7953);
@@ -1752,11 +2344,8 @@ function defaultEndAngle(d) {
 /***/ }),
 
 /***/ 2300:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+/***/ ((__unused_webpack_module, __unused_webpack___webpack_exports__, __webpack_require__) => {
 
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   UI: () => (/* reexport safe */ _map__WEBPACK_IMPORTED_MODULE_2__.Z)
-/* harmony export */ });
 /* harmony import */ var _nest__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9226);
 /* harmony import */ var _set__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7719);
 /* harmony import */ var _map__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(3998);
@@ -4405,6 +4994,146 @@ function parseSvg(value) {
 
 /***/ }),
 
+/***/ 1108:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Z: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+var pi = Math.PI,
+    tau = 2 * pi,
+    epsilon = 1e-6,
+    tauEpsilon = tau - epsilon;
+
+function Path() {
+  this._x0 = this._y0 = // start of current subpath
+  this._x1 = this._y1 = null; // end of current subpath
+  this._ = "";
+}
+
+function path() {
+  return new Path;
+}
+
+Path.prototype = path.prototype = {
+  constructor: Path,
+  moveTo: function(x, y) {
+    this._ += "M" + (this._x0 = this._x1 = +x) + "," + (this._y0 = this._y1 = +y);
+  },
+  closePath: function() {
+    if (this._x1 !== null) {
+      this._x1 = this._x0, this._y1 = this._y0;
+      this._ += "Z";
+    }
+  },
+  lineTo: function(x, y) {
+    this._ += "L" + (this._x1 = +x) + "," + (this._y1 = +y);
+  },
+  quadraticCurveTo: function(x1, y1, x, y) {
+    this._ += "Q" + (+x1) + "," + (+y1) + "," + (this._x1 = +x) + "," + (this._y1 = +y);
+  },
+  bezierCurveTo: function(x1, y1, x2, y2, x, y) {
+    this._ += "C" + (+x1) + "," + (+y1) + "," + (+x2) + "," + (+y2) + "," + (this._x1 = +x) + "," + (this._y1 = +y);
+  },
+  arcTo: function(x1, y1, x2, y2, r) {
+    x1 = +x1, y1 = +y1, x2 = +x2, y2 = +y2, r = +r;
+    var x0 = this._x1,
+        y0 = this._y1,
+        x21 = x2 - x1,
+        y21 = y2 - y1,
+        x01 = x0 - x1,
+        y01 = y0 - y1,
+        l01_2 = x01 * x01 + y01 * y01;
+
+    // Is the radius negative? Error.
+    if (r < 0) throw new Error("negative radius: " + r);
+
+    // Is this path empty? Move to (x1,y1).
+    if (this._x1 === null) {
+      this._ += "M" + (this._x1 = x1) + "," + (this._y1 = y1);
+    }
+
+    // Or, is (x1,y1) coincident with (x0,y0)? Do nothing.
+    else if (!(l01_2 > epsilon));
+
+    // Or, are (x0,y0), (x1,y1) and (x2,y2) collinear?
+    // Equivalently, is (x1,y1) coincident with (x2,y2)?
+    // Or, is the radius zero? Line to (x1,y1).
+    else if (!(Math.abs(y01 * x21 - y21 * x01) > epsilon) || !r) {
+      this._ += "L" + (this._x1 = x1) + "," + (this._y1 = y1);
+    }
+
+    // Otherwise, draw an arc!
+    else {
+      var x20 = x2 - x0,
+          y20 = y2 - y0,
+          l21_2 = x21 * x21 + y21 * y21,
+          l20_2 = x20 * x20 + y20 * y20,
+          l21 = Math.sqrt(l21_2),
+          l01 = Math.sqrt(l01_2),
+          l = r * Math.tan((pi - Math.acos((l21_2 + l01_2 - l20_2) / (2 * l21 * l01))) / 2),
+          t01 = l / l01,
+          t21 = l / l21;
+
+      // If the start tangent is not coincident with (x0,y0), line to.
+      if (Math.abs(t01 - 1) > epsilon) {
+        this._ += "L" + (x1 + t01 * x01) + "," + (y1 + t01 * y01);
+      }
+
+      this._ += "A" + r + "," + r + ",0,0," + (+(y01 * x20 > x01 * y20)) + "," + (this._x1 = x1 + t21 * x21) + "," + (this._y1 = y1 + t21 * y21);
+    }
+  },
+  arc: function(x, y, r, a0, a1, ccw) {
+    x = +x, y = +y, r = +r, ccw = !!ccw;
+    var dx = r * Math.cos(a0),
+        dy = r * Math.sin(a0),
+        x0 = x + dx,
+        y0 = y + dy,
+        cw = 1 ^ ccw,
+        da = ccw ? a0 - a1 : a1 - a0;
+
+    // Is the radius negative? Error.
+    if (r < 0) throw new Error("negative radius: " + r);
+
+    // Is this path empty? Move to (x0,y0).
+    if (this._x1 === null) {
+      this._ += "M" + x0 + "," + y0;
+    }
+
+    // Or, is (x0,y0) not coincident with the previous point? Line to (x0,y0).
+    else if (Math.abs(this._x1 - x0) > epsilon || Math.abs(this._y1 - y0) > epsilon) {
+      this._ += "L" + x0 + "," + y0;
+    }
+
+    // Is this arc empty? We’re done.
+    if (!r) return;
+
+    // Does the angle go the wrong way? Flip the direction.
+    if (da < 0) da = da % tau + tau;
+
+    // Is this a complete circle? Draw two arcs to complete the circle.
+    if (da > tauEpsilon) {
+      this._ += "A" + r + "," + r + ",0,1," + cw + "," + (x - dx) + "," + (y - dy) + "A" + r + "," + r + ",0,1," + cw + "," + (this._x1 = x0) + "," + (this._y1 = y0);
+    }
+
+    // Is this arc non-empty? Draw an arc!
+    else if (da > epsilon) {
+      this._ += "A" + r + "," + r + ",0," + (+(da >= pi)) + "," + cw + "," + (this._x1 = x + r * Math.cos(a1)) + "," + (this._y1 = y + r * Math.sin(a1));
+    }
+  },
+  rect: function(x, y, w, h) {
+    this._ += "M" + (this._x0 = this._x1 = +x) + "," + (this._y0 = this._y1 = +y) + "h" + (+w) + "v" + (+h) + "h" + (-w) + "Z";
+  },
+  toString: function() {
+    return this._;
+  }
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (path);
+
+
+/***/ }),
+
 /***/ 9441:
 /***/ ((__unused_webpack_module, __unused_webpack___webpack_exports__, __webpack_require__) => {
 
@@ -4613,19 +5342,15 @@ var slice = array.slice;
 /***/ 9649:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Z: () => (/* binding */ band)
-/* harmony export */ });
-/* unused harmony export point */
+/* unused harmony exports default, point */
 /* harmony import */ var d3_array__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(91);
-/* harmony import */ var _init__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(8348);
 /* harmony import */ var _ordinal__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7603);
 
 
 
 
 function band() {
-  var scale = (0,_ordinal__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .Z)().unknown(undefined),
+  var scale = ordinal().unknown(undefined),
       domain = scale.domain,
       ordinalRange = scale.range,
       range = [0, 1],
@@ -4648,7 +5373,7 @@ function band() {
     start += (stop - start - step * (n - paddingInner)) * align;
     bandwidth = step * (1 - paddingInner);
     if (round) start = Math.round(start), bandwidth = Math.round(bandwidth);
-    var values = (0,d3_array__WEBPACK_IMPORTED_MODULE_0__/* .range */ .w6)(n).map(function(i) { return start + step * i; });
+    var values = sequence(n).map(function(i) { return start + step * i; });
     return ordinalRange(reverse ? values.reverse() : values);
   }
 
@@ -4700,7 +5425,7 @@ function band() {
         .align(align);
   };
 
-  return _init__WEBPACK_IMPORTED_MODULE_2__/* .initRange */ .o.apply(rescale(), arguments);
+  return initRange.apply(rescale(), arguments);
 }
 
 function pointish(scale) {
@@ -5031,8 +5756,7 @@ function identity(domain) {
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   BY: () => (/* reexport safe */ _linear__WEBPACK_IMPORTED_MODULE_2__.Z),
-/* harmony export */   ti: () => (/* reexport safe */ _band__WEBPACK_IMPORTED_MODULE_0__.Z)
+/* harmony export */   BY: () => (/* reexport safe */ _linear__WEBPACK_IMPORTED_MODULE_2__.Z)
 /* harmony export */ });
 /* harmony import */ var _band__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9649);
 /* harmony import */ var _identity__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(9898);
@@ -5371,13 +6095,9 @@ function log() {
 /***/ 7603:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Z: () => (/* binding */ ordinal)
-/* harmony export */ });
-/* unused harmony export implicit */
+/* unused harmony exports implicit, default */
 /* harmony import */ var d3_collection__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2300);
 /* harmony import */ var _array__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(4057);
-/* harmony import */ var _init__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(8348);
 
 
 
@@ -5385,7 +6105,7 @@ function log() {
 var implicit = {name: "implicit"};
 
 function ordinal() {
-  var index = (0,d3_collection__WEBPACK_IMPORTED_MODULE_0__/* .map */ .UI)(),
+  var index = map(),
       domain = [],
       range = [],
       unknown = implicit;
@@ -5401,14 +6121,14 @@ function ordinal() {
 
   scale.domain = function(_) {
     if (!arguments.length) return domain.slice();
-    domain = [], index = (0,d3_collection__WEBPACK_IMPORTED_MODULE_0__/* .map */ .UI)();
+    domain = [], index = map();
     var i = -1, n = _.length, d, key;
     while (++i < n) if (!index.has(key = (d = _[i]) + "")) index.set(key, domain.push(d));
     return scale;
   };
 
   scale.range = function(_) {
-    return arguments.length ? (range = _array__WEBPACK_IMPORTED_MODULE_1__/* .slice */ .t.call(_), scale) : range.slice();
+    return arguments.length ? (range = slice.call(_), scale) : range.slice();
   };
 
   scale.unknown = function(_) {
@@ -5419,7 +6139,7 @@ function ordinal() {
     return ordinal(domain, range).unknown(unknown);
   };
 
-  _init__WEBPACK_IMPORTED_MODULE_2__/* .initRange */ .o.apply(scale, arguments);
+  initRange.apply(scale, arguments);
 
   return scale;
 }
@@ -7486,6 +8206,206 @@ function empty() {
   return (node.ownerDocument && node.ownerDocument.defaultView) // node is a Node
       || (node.document && node) // node is a Window
       || node.defaultView; // node is a Document
+}
+
+
+/***/ }),
+
+/***/ 3072:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Z: () => (/* export default binding */ __WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ function __WEBPACK_DEFAULT_EXPORT__(x) {
+  return function constant() {
+    return x;
+  };
+}
+
+
+/***/ }),
+
+/***/ 8143:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Z: () => (/* export default binding */ __WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+function Linear(context) {
+  this._context = context;
+}
+
+Linear.prototype = {
+  areaStart: function() {
+    this._line = 0;
+  },
+  areaEnd: function() {
+    this._line = NaN;
+  },
+  lineStart: function() {
+    this._point = 0;
+  },
+  lineEnd: function() {
+    if (this._line || (this._line !== 0 && this._point === 1)) this._context.closePath();
+    this._line = 1 - this._line;
+  },
+  point: function(x, y) {
+    x = +x, y = +y;
+    switch (this._point) {
+      case 0: this._point = 1; this._line ? this._context.lineTo(x, y) : this._context.moveTo(x, y); break;
+      case 1: this._point = 2; // proceed
+      default: this._context.lineTo(x, y); break;
+    }
+  }
+};
+
+/* harmony default export */ function __WEBPACK_DEFAULT_EXPORT__(context) {
+  return new Linear(context);
+}
+
+
+/***/ }),
+
+/***/ 1016:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   jv: () => (/* reexport safe */ _line_js__WEBPACK_IMPORTED_MODULE_0__.Z)
+/* harmony export */ });
+/* harmony import */ var _line_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5049);
+
+
+
+
+ // Note: radialArea is deprecated!
+ // Note: radialLine is deprecated!
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/***/ }),
+
+/***/ 5049:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Z: () => (/* export default binding */ __WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var d3_path__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1108);
+/* harmony import */ var _constant_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(3072);
+/* harmony import */ var _curve_linear_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(8143);
+/* harmony import */ var _point_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8260);
+
+
+
+
+
+/* harmony default export */ function __WEBPACK_DEFAULT_EXPORT__() {
+  var x = _point_js__WEBPACK_IMPORTED_MODULE_0__.x,
+      y = _point_js__WEBPACK_IMPORTED_MODULE_0__.y,
+      defined = (0,_constant_js__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .Z)(true),
+      context = null,
+      curve = _curve_linear_js__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .Z,
+      output = null;
+
+  function line(data) {
+    var i,
+        n = data.length,
+        d,
+        defined0 = false,
+        buffer;
+
+    if (context == null) output = curve(buffer = (0,d3_path__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .Z)());
+
+    for (i = 0; i <= n; ++i) {
+      if (!(i < n && defined(d = data[i], i, data)) === defined0) {
+        if (defined0 = !defined0) output.lineStart();
+        else output.lineEnd();
+      }
+      if (defined0) output.point(+x(d, i, data), +y(d, i, data));
+    }
+
+    if (buffer) return output = null, buffer + "" || null;
+  }
+
+  line.x = function(_) {
+    return arguments.length ? (x = typeof _ === "function" ? _ : (0,_constant_js__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .Z)(+_), line) : x;
+  };
+
+  line.y = function(_) {
+    return arguments.length ? (y = typeof _ === "function" ? _ : (0,_constant_js__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .Z)(+_), line) : y;
+  };
+
+  line.defined = function(_) {
+    return arguments.length ? (defined = typeof _ === "function" ? _ : (0,_constant_js__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .Z)(!!_), line) : defined;
+  };
+
+  line.curve = function(_) {
+    return arguments.length ? (curve = _, context != null && (output = curve(context)), line) : curve;
+  };
+
+  line.context = function(_) {
+    return arguments.length ? (_ == null ? context = output = null : output = curve(context = _), line) : context;
+  };
+
+  return line;
+}
+
+
+/***/ }),
+
+/***/ 8260:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   x: () => (/* binding */ x),
+/* harmony export */   y: () => (/* binding */ y)
+/* harmony export */ });
+function x(p) {
+  return p[0];
+}
+
+function y(p) {
+  return p[1];
 }
 
 
@@ -10548,10 +11468,11 @@ var dependencies = {"d3-array":"1","d3-axis":"1","d3-brush":"1","d3-chord":"1","
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   BYU: () => (/* reexport safe */ d3_scale__WEBPACK_IMPORTED_MODULE_9__.BY),
+/* harmony export */   F5q: () => (/* reexport safe */ d3_axis__WEBPACK_IMPORTED_MODULE_2__.F5),
 /* harmony export */   Fp7: () => (/* reexport safe */ d3_array__WEBPACK_IMPORTED_MODULE_1__.Fp),
-/* harmony export */   LLu: () => (/* reexport safe */ d3_axis__WEBPACK_IMPORTED_MODULE_2__.LL),
+/* harmony export */   VV$: () => (/* reexport safe */ d3_array__WEBPACK_IMPORTED_MODULE_1__.VV),
 /* harmony export */   Ys: () => (/* reexport safe */ d3_selection__WEBPACK_IMPORTED_MODULE_10__.Ys),
-/* harmony export */   tiA: () => (/* reexport safe */ d3_scale__WEBPACK_IMPORTED_MODULE_9__.ti),
+/* harmony export */   jvg: () => (/* reexport safe */ d3_shape__WEBPACK_IMPORTED_MODULE_11__.jv),
 /* harmony export */   y4O: () => (/* reexport safe */ d3_axis__WEBPACK_IMPORTED_MODULE_2__.y4)
 /* harmony export */ });
 /* harmony import */ var _dist_package_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2156);
@@ -10565,9 +11486,10 @@ var dependencies = {"d3-array":"1","d3-axis":"1","d3-brush":"1","d3-chord":"1","
 /* harmony import */ var d3_random__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(1638);
 /* harmony import */ var d3_scale__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(5315);
 /* harmony import */ var d3_selection__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(9825);
-/* harmony import */ var d3_transition__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(2263);
-/* harmony import */ var d3_voronoi__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(5117);
-/* harmony import */ var d3_zoom__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(9750);
+/* harmony import */ var d3_shape__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(1016);
+/* harmony import */ var d3_transition__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(2263);
+/* harmony import */ var d3_voronoi__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(5117);
+/* harmony import */ var d3_zoom__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(9750);
 
 
 
@@ -10612,10 +11534,11 @@ var dependencies = {"d3-array":"1","d3-axis":"1","d3-brush":"1","d3-chord":"1","
 /* harmony export */   L_: () => (/* binding */ NumUpDown),
 /* harmony export */   Zb: () => (/* binding */ Card),
 /* harmony export */   Zh: () => (/* binding */ ToggleSwitch),
+/* harmony export */   oi: () => (/* binding */ TextInput),
 /* harmony export */   xp: () => (/* binding */ FontPicker),
 /* harmony export */   zH: () => (/* binding */ ColorPicker)
 /* harmony export */ });
-/* unused harmony exports SimpleSlice, AlignmentGroup, Slider, DatePicker, ItemDropdown, AutoDropdown, DurationPicker, ErrorRangeControl, FieldPicker, ItemFlagsSelection, AutoFlagsSelection, TextInput, TextArea, GradientBar, ImageUpload, ListEditor, ReadOnlyText, ShapeMapSelector, CompositeSlice, FontControl, MarginPadding, Container, ContainerItem */
+/* unused harmony exports SimpleSlice, AlignmentGroup, Slider, DatePicker, ItemDropdown, AutoDropdown, DurationPicker, ErrorRangeControl, FieldPicker, ItemFlagsSelection, AutoFlagsSelection, TextArea, GradientBar, ImageUpload, ListEditor, ReadOnlyText, ShapeMapSelector, CompositeSlice, FontControl, MarginPadding, Container, ContainerItem */
 /* harmony import */ var _utils_FormattingSettingsUtils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3827);
 /**
  * Powerbi utils components classes for custom visual formatting pane objects
@@ -10785,7 +11708,7 @@ class AutoFlagsSelection extends (/* unused pure expression or super */ null && 
         this.type = "FlagsSelection" /* visuals.FormattingComponent.FlagsSelection */;
     }
 }
-class TextInput extends (/* unused pure expression or super */ null && (SimpleSlice)) {
+class TextInput extends SimpleSlice {
     constructor(object) {
         super(object);
         this.type = "TextInput" /* visuals.FormattingComponent.TextInput */;
@@ -11129,6 +12052,13 @@ function getPropertyValue(slice, value, defaultValue) {
 
 module.exports = Function('return this')();
 
+/***/ }),
+
+/***/ 3350:
+/***/ ((module) => {
+
+module.exports = null;
+
 /***/ })
 
 /******/ 	});
@@ -11158,6 +12088,18 @@ module.exports = Function('return this')();
 /******/ 	}
 /******/ 	
 /************************************************************************/
+/******/ 	/* webpack/runtime/compat get default export */
+/******/ 	(() => {
+/******/ 		// getDefaultExport function for compatibility with non-harmony modules
+/******/ 		__webpack_require__.n = (module) => {
+/******/ 			var getter = module && module.__esModule ?
+/******/ 				() => (module['default']) :
+/******/ 				() => (module);
+/******/ 			__webpack_require__.d(getter, { a: getter });
+/******/ 			return getter;
+/******/ 		};
+/******/ 	})();
+/******/ 	
 /******/ 	/* webpack/runtime/define property getters */
 /******/ 	(() => {
 /******/ 		// define getter functions for harmony exports

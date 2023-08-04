@@ -2,19 +2,30 @@
   "dataRoles": [
     {
       "displayName": "X_axis",
-      "name": "category",
-      "kind": "Grouping"
+      "name": "xAxis",
+      "kind": "Measure"
     },
+
     {
       "displayName": "Y_axis",
-      "name": "measure",
-      "kind": "Measure"
+      "name": "yAxis",
+      "kind": "Grouping"
     }
   ],
   "objects": {
     "xAxis": {
       "properties": {
         "show": { "type": { "bool": true } },
+        "minValue": {
+          "type": {
+            "numeric": true
+          }
+        },
+        "maxValue": {
+          "type": {
+            "numeric": true
+          }
+        },
         "fontSize": {
           "type": {
             "formatting": {
@@ -53,7 +64,7 @@
             }
           }
         },
-        "titleText": {
+        "textLabelX": {
           "type": {
             "text": true
           }
@@ -101,15 +112,21 @@
             }
           }
         },
-        "titleText": {
+        "textLabelY": {
           "type": {
             "text": true
+          }
+        },
+        "reverseY": {
+          "type": {
+            "bool": true
           }
         }
       }
     },
     "line": {
       "properties": {
+        "show": { "type": { "bool": true } },
         "lineColor": {
           "type": {
             "fill": {
@@ -117,6 +134,45 @@
                 "color": true
               }
             }
+          }
+        },
+        "lineThickness": {
+          "type": {
+            "numeric": true
+          }
+        },
+        "lineDash": {
+          "type": {
+            "numeric": true
+          }
+        }
+      }
+    },
+    "marker": {
+      "properties": {
+        "show": { "type": { "bool": true } },
+        "markerColor": {
+          "type": {
+            "fill": {
+              "solid": {
+                "color": true
+              }
+            }
+          }
+        },
+        "markerThickness": {
+          "type": {
+            "numeric": true
+          }
+        },
+        "markerDash": {
+          "type": {
+            "numeric": true
+          }
+        },
+        "markerValue": {
+          "type": {
+            "numeric": true
           }
         }
       }
@@ -127,7 +183,7 @@
       "categorical": {
         "categories": {
           "for": {
-            "in": "category"
+            "in": "yAxis"
           },
           "dataReductionAlgorithm": {
             "top": {}
@@ -137,7 +193,7 @@
           "select": [
             {
               "bind": {
-                "to": "measure"
+                "to": "xAxis"
               }
             }
           ]
@@ -145,5 +201,7 @@
       }
     }
   ],
-  "privileges": []
+  "privileges": [],
+  "supportsMultiVisualSelection": true,
+  "supportsHighlight": true
 }

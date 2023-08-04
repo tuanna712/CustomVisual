@@ -82,6 +82,7 @@ export class Visual implements IVisual {
         let radius: number = Math.min(width, height) / 2.2; // radius of cirle
 
         this.visualSettings = this.formattingSettingsService.populateFormattingSettingsModel(VisualSettings, options.dataViews);
+        
         this.visualSettings.circle.circleThickness.value = Math.max(0, this.visualSettings.circle.circleThickness.value);
         this.visualSettings.circle.circleThickness.value = Math.min(20, this.visualSettings.circle.circleThickness.value);
         // property of circle

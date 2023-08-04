@@ -5,12 +5,25 @@ import VisualUpdateOptions = powerbi.extensibility.visual.VisualUpdateOptions;
 import IVisual = powerbi.extensibility.visual.IVisual;
 export declare class Visual implements IVisual {
     private host;
+    private selectionManager;
     private svg;
-    private container;
     private line;
+    private line2;
+    private yAxis;
     private xAxis;
+    private textXLabel;
+    private textYLabel;
+    private marker;
+    private tooltip;
+    private point;
     private visualSetting;
     private formattingSettingsService;
+    private width;
+    private height;
+    private marginTop;
+    private marginRight;
+    private marginBottom;
+    private marginLeft;
     constructor(options: VisualConstructorOptions);
     update(options: VisualUpdateOptions): void;
     /**
