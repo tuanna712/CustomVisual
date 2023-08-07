@@ -1,0 +1,17 @@
+{
+		"version": "1.0.0",
+		"author": {"name":"huyhq","email":"huaquanghuy_t64@hus.edu.vn"},
+		"resources": [
+			{
+				"resourceId": "rId0",
+				"sourceType": 5,
+				"file": "resources/linechart07B762C1D36E438A8AD9FDA274C4FA72.pbiviz.json"
+			}
+		],
+		"visual": {"name":"linechart","displayName":"linechart","guid":"linechart07B762C1D36E438A8AD9FDA274C4FA72","visualClassName":"Visual","version":"1.0.0","description":"Custom Visual Vertical line chart","supportUrl":"https://community.powerbi.com","gitHubUrl":""},
+		"metadata": {
+			"pbivizjson": {
+				"resourceId": "rId0"
+			}
+		}
+	}

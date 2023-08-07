@@ -5,8 +5,8 @@ import VisualConstructorOptions = powerbiVisualsApi.extensibility.visual.VisualC
 import DialogConstructorOptions = powerbiVisualsApi.extensibility.visual.DialogConstructorOptions;
 var powerbiKey: any = "powerbi";
 var powerbi: any = window[powerbiKey];
-var linechart07B762C1D36E438A8AD9FDA274C4FA72_DEBUG: IVisualPlugin = {
-    name: 'linechart07B762C1D36E438A8AD9FDA274C4FA72_DEBUG',
+var linechart07B762C1D36E438A8AD9FDA274C4FA72: IVisualPlugin = {
+    name: 'linechart07B762C1D36E438A8AD9FDA274C4FA72',
     displayName: 'linechart',
     class: 'Visual',
     apiVersion: '5.1.0',
@@ -27,6 +27,6 @@ var linechart07B762C1D36E438A8AD9FDA274C4FA72_DEBUG: IVisualPlugin = {
 if (typeof powerbi !== "undefined") {
     powerbi.visuals = powerbi.visuals || {};
     powerbi.visuals.plugins = powerbi.visuals.plugins || {};
-    powerbi.visuals.plugins["linechart07B762C1D36E438A8AD9FDA274C4FA72_DEBUG"] = linechart07B762C1D36E438A8AD9FDA274C4FA72_DEBUG;
+    powerbi.visuals.plugins["linechart07B762C1D36E438A8AD9FDA274C4FA72"] = linechart07B762C1D36E438A8AD9FDA274C4FA72;
 }
-export default linechart07B762C1D36E438A8AD9FDA274C4FA72_DEBUG;
+export default linechart07B762C1D36E438A8AD9FDA274C4FA72;
